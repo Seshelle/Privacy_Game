@@ -4,7 +4,7 @@ function PowerUp(game, x, y, key, home) {
 	console.log('PowerUp created');
 	this.anchor.set(0.5);
 	this.body.whatAmI = "powerup";
-	this.body.id = "default";
+	this.body.id = "Default";
 
 }
 
