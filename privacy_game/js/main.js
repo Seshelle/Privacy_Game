@@ -29,6 +29,19 @@ MainMenu.prototype = {
 			console.log('Goto Game');
 			game.state.start('Gameplay');
 		}
+		game.input.onDown.add(this.gofull, this);
+	},
+	gofull: function() {
+
+	    if (game.scale.isFullScreen)
+	    {
+	        game.scale.stopFullScreen();
+	    }
+	    else
+	    {
+	        game.scale.startFullScreen(false);
+	    }
+
 	}
 }
 
