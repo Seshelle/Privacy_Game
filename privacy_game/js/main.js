@@ -22,6 +22,8 @@ MainMenu.prototype = {
 	},
 	create: function(){
         game.add.text(250, 165, 'Press space to play', {fontSize: '32px', fill: '#FFF'});
+
+        game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
 	},
 	update: function(){
 		//spacebar press to go to next state
@@ -50,7 +52,7 @@ Gameplay.prototype = {
 	create: function(){
 		background = game.add.sprite(0, 0, 'bg');
 
-		game.world.setBounds(0, 0, 2048, 2048);
+		game.world.setBounds(0, 0, 1024, 768);
 
 		pl = this.game.add.group();
 		player = new Player(game, game.world.width/2 + 100, game.world.height/2);
@@ -61,7 +63,7 @@ Gameplay.prototype = {
 
 		enemies = this.game.add.group();
 
-		game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.5, 0.5);
+		//game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.5, 0.5);
 
 		homebase = new Home(game, 'home');
 		game.add.existing(homebase);
@@ -84,8 +86,8 @@ Gameplay.prototype = {
 				
 				//spawn enemies 800 away at random angle
 				var angle = Math.random() * 6.28;
-				var randX = homebase.x + Math.cos(angle) * 800;
-				var randY = homebase.y + Math.sin(angle) * -800;
+				var randX = homebase.x + Math.cos(angle) * 300;
+				var randY = homebase.y + Math.sin(angle) * -300;
 				
 				var enemy = new Enemy(game, randX, randY, 'enemy', homebase);
 				game.add.existing(enemy);
@@ -113,7 +115,7 @@ GameOver.prototype = {
 }
 
 //create game and new states
-var game = new Phaser.Game(768, 1024, Phaser.AUTO, 'Test');
+var game = new Phaser.Game(1024, 768, Phaser.AUTO, 'Test');
 game.state.add('Preloader', Preloader);
 game.state.add('Gameplay', Gameplay);
 game.state.add('MainMenu', MainMenu);
