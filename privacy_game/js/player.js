@@ -8,6 +8,10 @@ var Player = function (game, x, y, frame) {
 	this.body.mass = playerMass;
 	
 	this.body.whatAmI = "player";
+
+	this.currPowerup = "None";
+	this.powerupText = game.add.text(16, game.world.height - 48, 'Power Up: None', {fontSize: '32px', fill: '#FFF'});
+	this.powerupText.fixedToCamera = true;
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -21,6 +25,8 @@ var playerMass = 10;
 var acceleration = 500;
 
 Player.prototype.update = function() {
+
+	//this.body.onBeginContact.add(collect, this);
 	
 	this.body.angularForce = 0;
 	
@@ -75,4 +81,15 @@ function accelerateToPoint(obj1, speed) {
     var angle = Math.atan2(actualPointerY - obj1.y, actualPointerX - obj1.x);
     obj1.body.force.x = Math.cos(angle) * speed;    // accelerateToObject 
     obj1.body.force.y = Math.sin(angle) * speed;
+}
+
+
+//player collision with powerup
+function collect (body, bodyB, shapeA, shapeB, equation) {
+	console.log(body.whatAmI);
+	if (body.whatAmI == "powerup"){
+		this.currPowerup = body.id;
+		body.sprite.kill();
+		this.powerupText.text = 'Power Up: ' + this.currPowerup;
+	}
 }
