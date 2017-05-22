@@ -73,6 +73,7 @@ function accelerateToPoint(obj1, speed) {
 	
 	//get angle between pointer and character and accelerate in that direction
     var angle = Math.atan2(actualPointerY - obj1.y, actualPointerX - obj1.x);
+	obj1.body.rotation = angle + game.math.degToRad(90);
     obj1.body.force.x = Math.cos(angle) * speed;    // accelerateToObject 
     obj1.body.force.y = Math.sin(angle) * speed;
 }
