@@ -35,8 +35,15 @@ Enemy.prototype.update = function() {
 	if (distance < this.shortestDistance){
 		this.shortestDistance = distance;
 	}
-	else if(distance - this.shortestDistance > 500 || distance > 850){
+	else if(distance - this.shortestDistance > 200 || distance > 400){
 		console.log("enemy killed");
+		this.destroy();
+	}
+	
+	if (distance < 30){
+		this.homeBase.health -= 10;
+		this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
+		this.body.sprite.kill();
 		this.destroy();
 	}
 }
