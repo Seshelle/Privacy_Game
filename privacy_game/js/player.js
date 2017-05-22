@@ -9,6 +9,15 @@ var Player = function (game, x, y, frame) {
 	this.body.mass = playerMass;
 	
 	this.body.whatAmI = "player";
+
+	this.totalBullets = 5;
+	this.numBullets = 0;
+
+	this.currPowerup = "None";
+	this.powerupText = game.add.text(game.world.width - 400, game.world.height - 48, 'Power Up: None', {fontSize: '32px', fill: '#FFF'});
+
+	this.fireKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	this.PUKey = game.input.keyboard.addKey(Phaser.Keyboard.Q);
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -71,7 +80,22 @@ Player.prototype.update = function() {
 	//get angle between pointer and character and accelerate in that direction
     var angle = Math.atan2(actualPointerY - this.y, actualPointerX - this.x);
 	this.body.rotation = angle + game.math.degToRad(90);
+
+
+	if(this.fireKey.justPressed()){
+		this.fire();
+	}
 };
+
+Player.prototype.fire = function(){
+	if (this.numBullets < this.totalBullets){
+        console.log('fired');
+        var bullet = new Bullet(game, this.x + 50, this.y, 'bullet');
+		accelerateToPoint(bullet, 90);
+        bullets.add(bullet);
+		this.numBullets++;
+	}
+}
 
 function accelerateToPoint(obj1, speed) {
 	//if speed is not defined, set to default of 60

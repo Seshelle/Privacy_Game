@@ -8,6 +8,7 @@ Preloader.prototype = {
 		game.load.image('player', 'assets/img/cursor.png');
 		game.load.image('enemy', 'assets/img/enemy.png');
 		game.load.image('home', 'assets/img/home.png');
+		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
 	},
 	create: function(){
@@ -63,6 +64,8 @@ Gameplay.prototype = {
 
 		enemies = this.game.add.group();
 
+		bullets = this.game.add.group();
+		
 		//game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.5, 0.5);
 
 		homebase = new Home(game, 'home');
@@ -123,6 +126,7 @@ game.state.add('GameOver', GameOver);
 
 
 //make global variables so level doesn't have to be reloaded after game over state
+var bullets;
 var player;
 var pl;
 var enemytimer = 0;
