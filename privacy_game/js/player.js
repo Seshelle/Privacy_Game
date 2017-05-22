@@ -5,6 +5,7 @@ var Player = function (game, x, y, frame) {
 	
 	game.physics.p2.enable(this, false);
 	this.body.angularDamping = 0.2;
+	this.body.damping = 0.2;
 	this.body.mass = playerMass;
 	
 	this.body.whatAmI = "player";
@@ -29,6 +30,7 @@ Player.prototype.update = function() {
 	//this.body.onBeginContact.add(collect, this);
 	
 	this.body.angularForce = 0;
+	this.body.angularVelocity = 0;
 	
 	//go towards mouse pointer when mouse button down
 	if (game.input.activePointer.isDown)
@@ -36,11 +38,11 @@ Player.prototype.update = function() {
 		//only start moving after a fifth of a second had passed
 		//makes it easier to spin without interfering with movement and vice versa
 		downTime += game.time.elapsed;
-		if (downTime > 200){
+		//if (downTime > 200){
 			//accelerate player toward pointer location
 			accelerateToPoint(this, playerMass * acceleration)
-		}
-		else{
+		//}
+		/*else{
 			//rotate charracter when swiping across screen, equal to speed of swipe
 			if (touchY + game.camera.y < this.y){
 				this.body.angularForce += (touchX - game.input.activePointer.position.x) * -playerMass;
@@ -55,7 +57,7 @@ Player.prototype.update = function() {
 			else{
 				this.body.angularForce += (touchY - game.input.activePointer.position.y) * playerMass;
 			}
-		}
+		}*/
 		
 	}else{
 		//player comes to a smooth stop when mouse button is let go
@@ -67,6 +69,14 @@ Player.prototype.update = function() {
 	
 	touchX = game.input.activePointer.position.x;
 	touchY = game.input.activePointer.position.y;
+	
+	//adjust for world coordinates, as camera coordinates won't necessarily match
+	var actualPointerY = game.input.activePointer.position.y + game.camera.y;
+	var actualPointerX = game.input.activePointer.position.x + game.camera.x;
+	
+	//get angle between pointer and character and accelerate in that direction
+    var angle = Math.atan2(actualPointerY - this.y, actualPointerX - this.x);
+	this.body.rotation = angle + game.math.degToRad(90);
 };
 
 function accelerateToPoint(obj1, speed) {
