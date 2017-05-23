@@ -83,14 +83,10 @@ Player.prototype.update = function() {
 	//get angle between pointer and character and accelerate in that direction
     var angle = Math.atan2(actualPointerY - this.y, actualPointerX - this.x);
 	this.body.rotation = angle + game.math.degToRad(90);
-<<<<<<< HEAD
-=======
-
 
 	if(this.fireKey.justPressed()){
 		this.fire();
 	}
->>>>>>> feature_bulletprefabs
 };
 
 Player.prototype.fire = function(){
