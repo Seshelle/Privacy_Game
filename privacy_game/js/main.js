@@ -65,7 +65,7 @@ Gameplay.prototype = {
 		enemies = this.game.add.group();
 
 		bullets = this.game.add.group();
-		
+
 		//game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.5, 0.5);
 
 		homebase = new Home(game, 'home');
@@ -98,6 +98,9 @@ Gameplay.prototype = {
 			}
 			enemytimer = 0;
 		}
+
+		game.world.bringToTop(bullets);
+		game.world.bringToTop(pl);
 	}
 }
 

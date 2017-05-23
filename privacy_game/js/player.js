@@ -7,10 +7,11 @@ var Player = function (game, x, y, frame) {
 	this.body.angularDamping = 0.2;
 	this.body.damping = 0.2;
 	this.body.mass = playerMass;
+	this.scale.setTo(0.5);
 	
 	this.body.whatAmI = "player";
 
-	this.totalBullets = 5;
+	this.totalBullets = 2;
 	this.numBullets = 0;
 
 	this.currPowerup = "None";
@@ -89,9 +90,13 @@ Player.prototype.update = function() {
 
 Player.prototype.fire = function(){
 	if (this.numBullets < this.totalBullets){
+		var angleRadians = Math.atan2(player.y - this.game.input.activePointer.position.y, player.x - this.game.input.activePointer.position.x);
+		var xpos = Math.cos(angleRadians) * 15;
+		var ypos = Math.sin(angleRadians) * 15;
+
         console.log('fired');
-        var bullet = new Bullet(game, this.x + 50, this.y, 'bullet');
-		accelerateToPoint(bullet, 90);
+        var bullet = new Bullet(game, this.x - xpos, this.y - ypos, 'bullet');
+		accelerateToPoint(bullet, 30000);
         bullets.add(bullet);
 		this.numBullets++;
 	}
