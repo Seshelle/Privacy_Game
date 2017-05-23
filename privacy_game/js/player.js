@@ -7,12 +7,18 @@ var Player = function (game, x, y, frame) {
 	this.body.angularDamping = 0.2;
 	this.body.damping = 0.2;
 	this.body.mass = playerMass;
+	this.scale.setTo(0.5);
 	
 	this.body.whatAmI = "player";
 
+	this.totalBullets = 2;
+	this.numBullets = 0;
+
 	this.currPowerup = "None";
-	this.powerupText = game.add.text(16, game.world.height - 48, 'Power Up: None', {fontSize: '32px', fill: '#FFF'});
-	this.powerupText.fixedToCamera = true;
+	this.powerupText = game.add.text(game.world.width - 400, game.world.height - 48, 'Power Up: None', {fontSize: '32px', fill: '#FFF'});
+
+	this.fireKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	this.PUKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -77,7 +83,29 @@ Player.prototype.update = function() {
 	//get angle between pointer and character and accelerate in that direction
     var angle = Math.atan2(actualPointerY - this.y, actualPointerX - this.x);
 	this.body.rotation = angle + game.math.degToRad(90);
+<<<<<<< HEAD
+=======
+
+
+	if(this.fireKey.justPressed()){
+		this.fire();
+	}
+>>>>>>> feature_bulletprefabs
 };
+
+Player.prototype.fire = function(){
+	if (this.numBullets < this.totalBullets){
+		var angleRadians = Math.atan2(player.y - this.game.input.activePointer.position.y, player.x - this.game.input.activePointer.position.x);
+		var xpos = Math.cos(angleRadians) * 15;
+		var ypos = Math.sin(angleRadians) * 15;
+
+        console.log('fired');
+        var bullet = new Bullet(game, this.x - xpos, this.y - ypos, 'bullet');
+		accelerateToPoint(bullet, 30000);
+        bullets.add(bullet);
+		this.numBullets++;
+	}
+}
 
 function accelerateToPoint(obj1, speed) {
 	//if speed is not defined, set to default of 60

@@ -5,7 +5,6 @@ function PowerUp(game, x, y, key, home) {
 	this.anchor.set(0.5);
 	this.body.whatAmI = "powerup";
 	this.body.id = "Default";
-
 }
 
 //add to constructor to PowerUp prototype
