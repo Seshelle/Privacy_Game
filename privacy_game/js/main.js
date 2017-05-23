@@ -28,11 +28,12 @@ MainMenu.prototype = {
 	},
 	update: function(){
 		//spacebar press to go to next state
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+		this.key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		this.key.onDown.add(this.gofull, this);
+		if(this.key.justPressed()){
 			console.log('Goto Game');
 			game.state.start('Gameplay');
 		}
-		game.input.onDown.add(this.gofull, this);
 	},
 	gofull: function() {
 
