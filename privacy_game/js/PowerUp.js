@@ -4,7 +4,10 @@ function PowerUp(game, x, y, key, home) {
 	console.log('PowerUp created');
 	this.anchor.set(0.5);
 	this.body.whatAmI = "powerup";
-	this.body.id = "Default";
+	this.id = "Default";
+
+	this.animations.add('animatePU', [0, 1, 2, 3, 4], 10, true);
+	this.animations.play('animatePU'); //play animation
 }
 
 //add to constructor to PowerUp prototype

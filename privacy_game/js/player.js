@@ -87,6 +87,19 @@ Player.prototype.update = function() {
 	if(this.fireKey.justPressed()){
 		this.fire();
 	}
+
+	if(this.PUKey.justPressed()){
+		//use powerup
+		if(this.currPowerup == "Dash"){
+			//player.speed += 2;
+			acceleration += 200;
+		}
+
+		this.currPowerup = "None";
+		this.powerupText.text = 'Power Up: ' + this.currPowerup;
+	}
+
+	this.body.onBeginContact.add(collect, this);
 };
 
 Player.prototype.fire = function(){
@@ -121,9 +134,9 @@ function accelerateToPoint(obj1, speed) {
 
 //player collision with powerup
 function collect (body, bodyB, shapeA, shapeB, equation) {
-	console.log(body.whatAmI);
-	if (body.whatAmI == "powerup"){
-		this.currPowerup = body.id;
+	//console.log(body.whatAmI);
+	if (body != null && body.whatAmI == "powerup" && this.currPowerup == "None"){
+		this.currPowerup = body.sprite.id;
 		body.sprite.kill();
 		this.powerupText.text = 'Power Up: ' + this.currPowerup;
 	}

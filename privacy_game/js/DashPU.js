@@ -1,6 +1,6 @@
 Dash = function (game, x, y) {
-	PowerUp.call(this, game, x, y, 'Dash');
-	this.body.id = "Dash";
+	PowerUp.call(this, game, x, y, 'powerup');
+	this.id = "Dash";
 };
 Dash.prototype = Object.create(PowerUp.prototype);
 
