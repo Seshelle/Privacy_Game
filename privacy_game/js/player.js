@@ -7,8 +7,18 @@ var Player = function (game, x, y, frame) {
 	this.body.angularDamping = 0.2;
 	this.body.damping = 0.2;
 	this.body.mass = playerMass;
+	this.scale.setTo(0.5);
 	
 	this.body.whatAmI = "player";
+
+	this.totalBullets = 2;
+	this.numBullets = 0;
+
+	this.currPowerup = "None";
+	this.powerupText = game.add.text(game.world.width - 400, game.world.height - 48, 'Power Up: None', {fontSize: '32px', fill: '#FFF'});
+
+	this.fireKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	this.PUKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -22,6 +32,8 @@ var playerMass = 10;
 var acceleration = 500;
 
 Player.prototype.update = function() {
+
+	//this.body.onBeginContact.add(collect, this);
 	
 	this.body.angularForce = 0;
 	this.body.angularVelocity = 0;
@@ -71,7 +83,25 @@ Player.prototype.update = function() {
 	//get angle between pointer and character and accelerate in that direction
     var angle = Math.atan2(actualPointerY - this.y, actualPointerX - this.x);
 	this.body.rotation = angle + game.math.degToRad(90);
+
+	if(this.fireKey.justPressed()){
+		this.fire();
+	}
 };
+
+Player.prototype.fire = function(){
+	if (this.numBullets < this.totalBullets){
+		var angleRadians = Math.atan2(player.y - this.game.input.activePointer.position.y, player.x - this.game.input.activePointer.position.x);
+		var xpos = Math.cos(angleRadians) * 15;
+		var ypos = Math.sin(angleRadians) * 15;
+
+        console.log('fired');
+        var bullet = new Bullet(game, this.x - xpos, this.y - ypos, 'bullet');
+		accelerateToPoint(bullet, 30000);
+        bullets.add(bullet);
+		this.numBullets++;
+	}
+}
 
 function accelerateToPoint(obj1, speed) {
 	//if speed is not defined, set to default of 60
@@ -86,4 +116,15 @@ function accelerateToPoint(obj1, speed) {
 	obj1.body.rotation = angle + game.math.degToRad(90);
     obj1.body.force.x = Math.cos(angle) * speed;    // accelerateToObject 
     obj1.body.force.y = Math.sin(angle) * speed;
+}
+
+
+//player collision with powerup
+function collect (body, bodyB, shapeA, shapeB, equation) {
+	console.log(body.whatAmI);
+	if (body.whatAmI == "powerup"){
+		this.currPowerup = body.id;
+		body.sprite.kill();
+		this.powerupText.text = 'Power Up: ' + this.currPowerup;
+	}
 }

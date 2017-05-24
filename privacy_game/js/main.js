@@ -8,6 +8,7 @@ Preloader.prototype = {
 		game.load.image('player', 'assets/img/cursor.png');
 		game.load.image('enemy', 'assets/img/enemy.png');
 		game.load.image('home', 'assets/img/home.png');
+		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
 	},
 	create: function(){
@@ -27,11 +28,12 @@ MainMenu.prototype = {
 	},
 	update: function(){
 		//spacebar press to go to next state
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
+		this.key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+		this.key.onDown.add(this.gofull, this);
+		if(this.key.justPressed()){
 			console.log('Goto Game');
 			game.state.start('Gameplay');
 		}
-		game.input.onDown.add(this.gofull, this);
 	},
 	gofull: function() {
 
@@ -62,6 +64,8 @@ Gameplay.prototype = {
 		player.body.collideworldbounds = true;
 
 		enemies = this.game.add.group();
+
+		bullets = this.game.add.group();
 
 		//game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.5, 0.5);
 
@@ -95,6 +99,9 @@ Gameplay.prototype = {
 			}
 			enemytimer = 0;
 		}
+
+		game.world.bringToTop(bullets);
+		game.world.bringToTop(pl);
 	}
 }
 
@@ -123,6 +130,7 @@ game.state.add('GameOver', GameOver);
 
 
 //make global variables so level doesn't have to be reloaded after game over state
+var bullets;
 var player;
 var pl;
 var enemytimer = 0;
