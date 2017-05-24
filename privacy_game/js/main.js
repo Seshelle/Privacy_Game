@@ -23,7 +23,7 @@ MainMenu.prototype = {
 	create: function(){
         game.add.text(250, 165, 'Press space to play', {fontSize: '32px', fill: '#FFF'});
 
-        game.scale.fullScreenScaleMode = Phaser.ScaleManager.SHOW_ALL;
+        game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 	},
 	update: function(){
 		//spacebar press to go to next state
@@ -52,7 +52,7 @@ Gameplay.prototype = {
 	create: function(){
 		background = game.add.sprite(0, 0, 'bg');
 
-		game.world.setBounds(0, 0, 1024, 768);
+		game.world.setBounds(0, 0, 1024, 576);
 
 		pl = this.game.add.group();
 		player = new Player(game, game.world.width/2 + 100, game.world.height/2);
@@ -115,7 +115,7 @@ GameOver.prototype = {
 }
 
 //create game and new states
-var game = new Phaser.Game(1024, 768, Phaser.AUTO, 'Test');
+var game = new Phaser.Game(1024, 576, Phaser.AUTO, 'Test');
 game.state.add('Preloader', Preloader);
 game.state.add('Gameplay', Gameplay);
 game.state.add('MainMenu', MainMenu);
