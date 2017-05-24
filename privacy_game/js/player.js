@@ -11,7 +11,7 @@ var Player = function (game, x, y, frame) {
 	
 	this.body.whatAmI = "player";
 
-	this.totalBullets = 2;
+	this.totalBullets = 1;
 	this.numBullets = 0;
 
 	this.currPowerup = "None";

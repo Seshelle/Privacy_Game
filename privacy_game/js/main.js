@@ -86,12 +86,14 @@ Gameplay.prototype = {
 		if(enemytimer === 500){
 			console.log("spawn enemies");
 			//spawns random amount of enemies (1-10) at random location
-			for(let x = 0; x < Math.random() * 10; x++){
+			var numEnemies = Math.random() * 7;
+			for(let x = 0; x < numEnemies; x++){
 				
-				//spawn enemies 800 away at random angle
+				//spawn enemies set distance away at random angle
+				var spawnDistance = 200;
 				var angle = Math.random() * 6.28;
-				var randX = homebase.x + Math.cos(angle) * 300;
-				var randY = homebase.y + Math.sin(angle) * -300;
+				var randX = homebase.x + Math.cos(angle) * spawnDistance;
+				var randY = homebase.y + Math.sin(angle) * -spawnDistance;
 				
 				var enemy = new Enemy(game, randX, randY, 'enemy', homebase);
 				game.add.existing(enemy);

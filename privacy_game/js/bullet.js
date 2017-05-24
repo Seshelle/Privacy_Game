@@ -31,7 +31,7 @@ Bullet.prototype.bulletOut = function() {
 
 function hitEnemy (body, bodyB, shapeA, shapeB, equation) {
 	if (body != null && body.whatAmI == "enemy"){
-		body.sprite.kill();
+		//body.sprite.kill();
 		this.kill();
 		player.numBullets--;
 	}
