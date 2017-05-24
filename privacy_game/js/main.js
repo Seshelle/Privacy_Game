@@ -8,6 +8,7 @@ Preloader.prototype = {
 		game.load.image('player', 'assets/img/cursor.png');
 		game.load.image('enemy', 'assets/img/enemy.png');
 		game.load.image('home', 'assets/img/home.png');
+		game.load.image('enemyparticle', 'assets/img/enemyParticle2.png');
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
 	},
@@ -54,7 +55,7 @@ Gameplay.prototype = {
 	create: function(){
 		background = game.add.sprite(0, 0, 'bg');
 
-		game.world.setBounds(0, 0, 1024, 768);
+		game.world.setBounds(0, 0, 1024, 576);
 
 		pl = this.game.add.group();
 		player = new Player(game, game.world.width/2 + 100, game.world.height/2);
@@ -75,6 +76,9 @@ Gameplay.prototype = {
 		music = game.add.audio('music');
         music.loop = true;
     	music.play();
+
+    	emitter = game.add.emitter(0, 0, 100);
+    	emitter.makeParticles('enemyparticle');
 	},
 	update: function() {
 		
@@ -122,7 +126,7 @@ GameOver.prototype = {
 }
 
 //create game and new states
-var game = new Phaser.Game(1024, 768, Phaser.AUTO, 'Test');
+var game = new Phaser.Game(1024, 576, Phaser.AUTO, 'Test');
 game.state.add('Preloader', Preloader);
 game.state.add('Gameplay', Gameplay);
 game.state.add('MainMenu', MainMenu);
@@ -136,6 +140,7 @@ var pl;
 var enemytimer = 0;
 var enemies;
 var homebase;
+var emitter;
 
 //start game preloading
 game.state.start('Preloader');
