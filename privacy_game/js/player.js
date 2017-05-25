@@ -90,11 +90,7 @@ Player.prototype.update = function() {
 
 	if(this.PUKey.justPressed()){
 		//use powerup
-		if(this.currPowerup == "Dash"){
-			//player.speed += 2;
-			acceleration += 200;
-		}
-
+		usePU(this.currPowerup);
 		this.currPowerup = "None";
 		this.powerupText.text = 'Power Up: ' + this.currPowerup;
 	}
@@ -138,6 +134,24 @@ function collect (body, bodyB, shapeA, shapeB, equation) {
 	if (body != null && body.whatAmI == "powerup" && this.currPowerup == "None"){
 		this.currPowerup = body.sprite.id;
 		body.sprite.kill();
+		activePU--;
 		this.powerupText.text = 'Power Up: ' + this.currPowerup;
+	}
+}
+
+function usePU(powerup){
+	switch (powerup){
+		case "Dash":
+			break;
+		case "Turret":
+			break;
+		case "Bomb":
+			break;
+		case "Patch":
+			homebase.health = homebase.health + 30 > 100 ? 100 : homebase.health + 30;
+			homebase.healthText.text = 'Health: ' + homebase.health;
+			break;
+		default:
+			console.log("no powerup");
 	}
 }

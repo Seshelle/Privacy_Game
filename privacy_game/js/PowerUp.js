@@ -1,10 +1,12 @@
 function PowerUp(game, x, y, key, home) {
-	Phaser.Sprite.call(this, game, x, y, key);
+	Phaser.Sprite.call(this, game, x, y, 'powerup');
 	game.physics.p2.enable(this, false);
 	console.log('PowerUp created');
 	this.anchor.set(0.5);
 	this.body.whatAmI = "powerup";
-	this.id = "Default";
+	this.PUs = ["Dash", "Turret", "Bomb", "Patch"];
+	var choose = Math.floor(Math.random() * this.PUs.length);
+	this.id = this.PUs[choose];
 
 	this.animations.add('animatePU', [0, 1, 2, 3, 4], 10, true);
 	this.animations.play('animatePU'); //play animation
@@ -13,8 +15,3 @@ function PowerUp(game, x, y, key, home) {
 //add to constructor to PowerUp prototype
 PowerUp.prototype = Object.create(Phaser.Sprite.prototype);
 PowerUp.prototype.constructor = PowerUp;
-
-//override default update function
-PowerUp.prototype.update = function() {
-
-}

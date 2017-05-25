@@ -105,12 +105,15 @@ Gameplay.prototype = {
 
 		PUtimer++;
 		if(PUtimer >= (Math.random() * 600) + 500){
-			var angle = Math.random() * 6.28;
-			var randX = homebase.x + Math.cos(angle) * 250;
-			var randY = homebase.y + Math.sin(angle) * -250;
-			var PU = new Dash(game, randX, randY);
-			powerups.add(PU);
-			game.add.existing(PU);
+			if(activePU < maxPU){
+				var angle = Math.random() * 6.28;
+				var randX = homebase.x + Math.cos(angle) * 250;
+				var randY = homebase.y + Math.sin(angle) * -250;
+				var PU = new PowerUp(game, randX, randY);
+				powerups.add(PU);
+				game.add.existing(PU);
+				activePU++;
+			}
 			PUtimer = 0;
 		}
 
@@ -149,6 +152,8 @@ var player;
 var pl;
 var enemytimer = 0;
 var PUtimer = 0;
+var maxPU = 4;
+var activePU = 0;
 var enemies;
 var homebase;
 var powerups;

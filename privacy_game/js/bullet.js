@@ -35,7 +35,9 @@ function hitEnemy (body, bodyB, shapeA, shapeB, equation) {
 		this.kill();
 		player.numBullets--;
 	}
-	else if(body == null){
+	else if(body != null && body.whatAmI == "player"){
+	}
+	else{
 		this.kill();
 		player.numBullets--;
 	}
