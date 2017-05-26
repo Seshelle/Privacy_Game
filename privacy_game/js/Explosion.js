@@ -23,7 +23,7 @@ Explosion.prototype.update = function () {
 	console.log(this.animations.currentAnim.frame);
 	if(this.animations.currentAnim.frame == 8){
 		console.log("destroy explosion");
-		this.body.sprite.kill();
+		this.kill();
 		this.destroy();
 		game.camera.shake(0.005, 200);
 	}
@@ -32,6 +32,6 @@ Explosion.prototype.update = function () {
 function explode (body, bodyB, shapeA, shapeB, equation) {
 	console.log(body.whatAmI);
 	if (body != null && body.whatAmI == "enemy"){
-		body.sprite.kill();
+		body.sprite.destroy();
 	}
 }

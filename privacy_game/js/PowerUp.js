@@ -4,9 +4,9 @@ function PowerUp(game, x, y, key, home) {
 	console.log('PowerUp created');
 	this.anchor.set(0.5);
 	this.body.whatAmI = "powerup";
-	this.PUs = ["Dash", "Turret", "Bomb", "Patch"];
+	this.PUs = ["Blink", "Turret", "Bomb", "Patch"];
 	var choose = Math.floor(Math.random() * this.PUs.length);
-	this.id = this.PUs[2];
+	this.id = this.PUs[choose];
 
 	this.animations.add('animatePU', [0, 1, 2, 3, 4], 10, true);
 	this.animations.play('animatePU'); //play animation
