@@ -8,6 +8,8 @@ Preloader.prototype = {
 		game.load.image('player', 'assets/img/cursor.png');
 		game.load.image('enemy', 'assets/img/enemy.png');
 		game.load.image('home', 'assets/img/home.png');
+		game.load.image('turretbase', 'assets/img/turret.png');
+		game.load.image('turrettop', 'assets/img/turrettop.png');
 		game.load.spritesheet('files', 'assets/img/files.png', 67, 77);
 		game.load.spritesheet('documents', 'assets/img/documents.png', 67, 77);
 		game.load.spritesheet('trash', 'assets/img/trash.png', 67, 77);
@@ -150,6 +152,9 @@ Gameplay.prototype = {
 			}
 			else if(this.starttimer == 100){
 				this.readyText.text = '1';
+				documents.destroy();
+				trash.destroy();
+				files.destroy();
 				documents.kill();
 				trash.kill()
 				files.kill();
@@ -233,6 +238,7 @@ var start;
 var bullets;
 var player;
 var pl;
+var activeTurret = false;
 var enemytimer = 0;
 var PUtimer = 0;
 var maxPU = 4;

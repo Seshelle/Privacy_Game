@@ -57,7 +57,7 @@ Enemy.prototype.update = function() {
 	if (distance < 30){
 		this.homeBase.health -= 10;
 		this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
-		this.body.sprite.kill();
+		this.kill();
 		this.destroy();
 	}
 	

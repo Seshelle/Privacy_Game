@@ -33,7 +33,9 @@ var playerMass = 10;
 var acceleration = 500;
 
 Player.prototype.update = function() {
-
+	if(this.numBullets < 0){
+		this.numBullets = 0;
+	}
 	//this.body.onBeginContact.add(collect, this);
 	
 	this.body.angularForce = 0;
@@ -86,15 +88,13 @@ Player.prototype.update = function() {
 	    var angle = Math.atan2(actualPointerY - this.y, actualPointerX - this.x);
 		this.body.rotation = angle + game.math.degToRad(90);
 
-		if(this.fireKey.justPressed()){
+		if(this.fireKey.justPressed() && !activeTurret){
 			this.fire();
 		}
 
 		if(this.PUKey.justPressed()){
 			//use powerup
 			usePU(this.currPowerup);
-			this.currPowerup = "None";
-			this.powerupText.text = 'Power Up: ' + this.currPowerup;
 		}
 
 		this.body.onBeginContact.add(collect, this);
@@ -144,20 +144,35 @@ function collect (body, bodyB, shapeA, shapeB, equation) {
 
 function usePU(powerup){
 	switch (powerup){
-		case "Dash":
+		case "Blink":
+			player.body.x = game.input.activePointer.position.x;
+			player.body.y = game.input.activePointer.position.y;
+			player.currPowerup = "None";
 			break;
 		case "Turret":
+			if(!activeTurret){
+				activeTurret = true;
+				var turret = new Turret(game, homebase.x, homebase.y);
+				game.add.existing(turret);
+				player.currPowerup = "None";
+			}
+			else{
+				player.currPowerup = "Turret";
+			}
 			break;
 		case "Bomb":
 			var bomb = new Bomb(game, player.x, player.y);
 			//bomb.body.static = true;
 			game.add.existing(bomb);
+			player.currPowerup = "None";
 			break;
 		case "Patch":
 			homebase.health = homebase.health + 30 > 100 ? 100 : homebase.health + 30;
 			homebase.healthText.text = 'Health: ' + homebase.health;
+			player.currPowerup = "None";
 			break;
 		default:
 			console.log("no powerup");
 	}
+	player.powerupText.text = 'Power Up: ' + player.currPowerup;
 }
