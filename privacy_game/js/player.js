@@ -3,11 +3,11 @@
 var Player = function (game, x, y, frame) {
 	Phaser.Sprite.call(this, game, x, y, 'player', frame);
 	
+	this.scale.setTo(0.5);
 	game.physics.p2.enable(this, false);
 	this.body.angularDamping = 0.2;
 	this.body.damping = 0.2;
 	this.body.mass = playerMass;
-	this.scale.setTo(0.5);
 	
 	this.body.whatAmI = "player";
 
