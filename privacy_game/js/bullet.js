@@ -57,4 +57,3 @@ function particleBurst(enemy){
 	emitter.start(true, 500, null, 10);
 	emitter.update();
 }
-
