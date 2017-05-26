@@ -8,10 +8,9 @@ function Bullet(game, x, y, key) {
 	this.whatAmI = 'bullet';
 
 	this.checkWorldBounds = true;
-	this.events.onOutOfBounds.add(this.bulletOut, this);
 
-	this.animations.add('animate', [0, 1, 2, 3], 10, true);
-	this.animations.play('animate'); //play animation
+	this.animations.add('animatebullet', [0, 1, 2, 3], 10, true);
+	this.animations.play('animatebullet'); //play animation
 }
 
 //add to constructor to Bullet prototype
@@ -35,7 +34,9 @@ function hitEnemy (body, bodyB, shapeA, shapeB, equation) {
 		this.kill();
 		player.numBullets--;
 	}
-	else if(body == null){
+	else if(body != null && body.whatAmI == "player"){
+	}
+	else{
 		this.kill();
 		player.numBullets--;
 	}

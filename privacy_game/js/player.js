@@ -87,6 +87,15 @@ Player.prototype.update = function() {
 	if(this.fireKey.justPressed()){
 		this.fire();
 	}
+
+	if(this.PUKey.justPressed()){
+		//use powerup
+		usePU(this.currPowerup);
+		this.currPowerup = "None";
+		this.powerupText.text = 'Power Up: ' + this.currPowerup;
+	}
+
+	this.body.onBeginContact.add(collect, this);
 };
 
 Player.prototype.fire = function(){
@@ -121,10 +130,31 @@ function accelerateToPoint(obj1, speed) {
 
 //player collision with powerup
 function collect (body, bodyB, shapeA, shapeB, equation) {
-	console.log(body.whatAmI);
-	if (body.whatAmI == "powerup"){
-		this.currPowerup = body.id;
+	//console.log(body.whatAmI);
+	if (body != null && body.whatAmI == "powerup" && this.currPowerup == "None"){
+		this.currPowerup = body.sprite.id;
 		body.sprite.kill();
+		activePU--;
 		this.powerupText.text = 'Power Up: ' + this.currPowerup;
+	}
+}
+
+function usePU(powerup){
+	switch (powerup){
+		case "Dash":
+			break;
+		case "Turret":
+			break;
+		case "Bomb":
+			var bomb = new Bomb(game, player.x, player.y);
+			bomb.body.static = true;
+			game.add.existing(bomb);
+			break;
+		case "Patch":
+			homebase.health = homebase.health + 30 > 100 ? 100 : homebase.health + 30;
+			homebase.healthText.text = 'Health: ' + homebase.health;
+			break;
+		default:
+			console.log("no powerup");
 	}
 }

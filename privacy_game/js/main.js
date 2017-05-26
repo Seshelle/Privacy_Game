@@ -8,7 +8,10 @@ Preloader.prototype = {
 		game.load.image('player', 'assets/img/cursor.png');
 		game.load.image('enemy', 'assets/img/enemy.png');
 		game.load.image('home', 'assets/img/home.png');
+		game.load.spritesheet('bomb', 'assets/img/smartbomb.png', 28, 38);
+		game.load.spritesheet('Explosion', 'assets/img/smartBombExplosion.png', 98, 94);
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
+		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
 		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
 	},
 	create: function(){
@@ -22,7 +25,7 @@ MainMenu.prototype = {
 		//load assets
 	},
 	create: function(){
-        game.add.text(250, 165, 'Press space to play', {fontSize: '32px', fill: '#FFF'});
+        game.add.text(16, 165, 'Press space to play\nHold mouse to move, space to shoot, W to use powerup', {fontSize: '32px', fill: '#FFF'});
 
         game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 	},
@@ -67,6 +70,8 @@ Gameplay.prototype = {
 
 		bullets = this.game.add.group();
 
+		powerups = this.game.add.group();
+
 		//game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.5, 0.5);
 
 		homebase = new Home(game, 'home');
@@ -100,6 +105,20 @@ Gameplay.prototype = {
 				enemies.add(enemy);
 			}
 			enemytimer = 0;
+		}
+
+		PUtimer++;
+		if(PUtimer >= (Math.random() * 600) + 500){
+			if(activePU < maxPU){
+				var angle = Math.random() * 6.28;
+				var randX = homebase.x + Math.cos(angle) * 250;
+				var randY = homebase.y + Math.sin(angle) * -250;
+				var PU = new PowerUp(game, randX, randY);
+				powerups.add(PU);
+				game.add.existing(PU);
+				activePU++;
+			}
+			PUtimer = 0;
 		}
 
 		game.world.bringToTop(bullets);
@@ -136,8 +155,12 @@ var bullets;
 var player;
 var pl;
 var enemytimer = 0;
+var PUtimer = 0;
+var maxPU = 4;
+var activePU = 0;
 var enemies;
 var homebase;
+var powerups;
 
 //start game preloading
 game.state.start('Preloader');
