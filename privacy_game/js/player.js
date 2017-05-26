@@ -147,7 +147,7 @@ function usePU(powerup){
 			break;
 		case "Bomb":
 			var bomb = new Bomb(game, player.x, player.y);
-			bomb.body.static = true;
+			//bomb.body.static = true;
 			game.add.existing(bomb);
 			break;
 		case "Patch":
