@@ -51,7 +51,6 @@ Enemy.prototype.update = function() {
 	
 	/*else if(distance - this.shortestDistance > 200 || distance > 400){
 		console.log("enemy killed");
-		particleBurst(this.body);
 		this.destroy();
 	}*/
 	
@@ -68,6 +67,7 @@ Enemy.prototype.update = function() {
 function hitWall (body, bodyB, shapeA, shapeB, equation) {
 	if(body == null){
 		this.body.sprite.kill();
+		particleBurst(this.body);
 		this.destroy();
 	}
 }
