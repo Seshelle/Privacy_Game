@@ -9,11 +9,13 @@ function Enemy(game, x, y, key, home) {
 	this.homeBase = home;
 	
 	this.body.whatAmI = "enemy";
-	this.shortestDistance = 99999;
+	this.previousDistance = 99999;
 	
 	this.scale.x = 0.01;
 	this.scale.y = 0.01;
 	this.spawnScale = 0;
+	
+	this.body.onBeginContact.add(hitWall, this);
 	
 	//radians = game.physics.arcade.angleBetween(this, homebase);
 	//degrees = radians * (180/Math.PI);
@@ -38,13 +40,15 @@ Enemy.prototype.update = function() {
 		this.scale.y = this.spawnScale;
 	}
 	
-	if (this.shortestDistance - distance < 0.1){
+	if (this.previousDistance - distance < 0.1){
 		accelerateToObject(this,this.homeBase,30);
 	}
-	
-	if (distance < this.shortestDistance){
-		this.shortestDistance = distance;
+	else{
+		accelerateToObject(this,this.homeBase,0);
 	}
+	
+	this.previousDistance = distance;
+	
 	/*else if(distance - this.shortestDistance > 200 || distance > 400){
 		console.log("enemy killed");
 		this.destroy();
@@ -57,7 +61,7 @@ Enemy.prototype.update = function() {
 		this.destroy();
 	}
 	
-	this.body.onBeginContact.add(hitWall, this);
+
 }
 
 function hitWall (body, bodyB, shapeA, shapeB, equation) {
