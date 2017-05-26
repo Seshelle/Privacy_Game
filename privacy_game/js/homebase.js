@@ -6,10 +6,12 @@ function Home(game, key, frame) {
 	this.score = 0;
 	this.scoretimer = 0;
 
-	this.scoreText = game.add.text(16, game.world.height - 40, 'Score: 0', {fontSize: '20px', fill: '#FFF'});
+
+	this.scoreText = game.add.text(425, game.world.height + 10, 'Score: 0', {fontSize: '20px', fill: '#000'});
 	this.scoreText.fixedToCamera = true;
 
-	this.healthText = game.add.text(300, game.world.height - 40, 'Health: 100', {fontSize: '20px', fill: '#FFF'});
+	this.healthText = game.add.text(550, game.world.height + 10, 'Health: 100', {fontSize: '20px', fill: '#000'});
+
 	this.healthText.fixedToCamera = true;
 	
 	//this.body.static = true;

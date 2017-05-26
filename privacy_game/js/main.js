@@ -8,6 +8,10 @@ Preloader.prototype = {
 		game.load.image('player', 'assets/img/cursor.png');
 		game.load.image('enemy', 'assets/img/enemy.png');
 		game.load.image('home', 'assets/img/home.png');
+		game.load.spritesheet('files', 'assets/img/files.png', 67, 77);
+		game.load.spritesheet('documents', 'assets/img/documents.png', 67, 77);
+		game.load.spritesheet('trash', 'assets/img/trash.png', 67, 77);
+		game.load.spritesheet('toolbar', 'assets/img/toolbar.png', 1026, 44);
 		game.load.spritesheet('bomb', 'assets/img/smartbomb.png', 28, 38);
 		game.load.spritesheet('Explosion', 'assets/img/smartBombExplosion.png', 98, 94);
 		game.load.image('enemyparticle', 'assets/img/enemyParticle2.png');
@@ -58,7 +62,31 @@ Gameplay.prototype = {
 	create: function(){
 		background = game.add.sprite(0, 0, 'bg');
 
-		game.world.setBounds(0, 0, 1024, 576);
+		toolbar = game.add.sprite(0, game.world.height - 44, 'toolbar');
+		toolbar.animations.add('run', [0, 1], 1, true);
+		toolbar.animations.play('run');
+
+		documents = game.add.sprite(60, 60, 'documents');
+		documents.anchor.set(0.5);
+		documents.animations.add('docidle', [0], 1, true);
+		documents.animations.add('docexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		documents.animations.play('docidle');
+
+		files = game.add.sprite(60, 157, 'files');
+		files.anchor.set(0.5);
+		files.animations.add('filesidle', [0], 1, true);
+		files.animations.add('filesexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		files.animations.play('filesidle');
+
+		trash = game.add.sprite(60, 254, 'trash');
+		trash.anchor.set(0.5);
+		trash.animations.add('trashidle', [0], 1, true);
+		trash.animations.add('trashexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		trash.animations.play('trashidle');
+
+		this.readyText;
+
+		game.world.setBounds(0, 0, 1024, 532);
 
 		pl = this.game.add.group();
 		player = new Player(game, game.world.width/2 + 100, game.world.height/2);
@@ -84,49 +112,95 @@ Gameplay.prototype = {
 
     	emitter = game.add.emitter(0, 0, 100);
     	emitter.makeParticles('enemyparticle');
+
+    	start = true;
+    	this.starttimer = 350;
 	},
 	update: function() {
-		
-		//check for collision between enemy and player
-		//game.physics.arcade.collide(enemies, pl);
+		if(this.starttimer >= -100){
+			this.starttimer--;
+		}
+		if(start){
+			homebase.score = 0;
+			if(this.starttimer == 300){
+				this.readyText = game.add.text(game.world.width/2, game.world.height/2, '3', {fontSize: '48px', fill: '#000'});
 
-		enemytimer++;
-		//every 5 seconds
-		if(enemytimer === 500){
-			console.log("spawn enemies");
-			//spawns random amount of enemies (1-10) at random location
-			var numEnemies = Math.random() * 7;
-			for(let x = 0; x < numEnemies; x++){
-				
-				//spawn enemies set distance away at random angle
-				var spawnDistance = 200;
-				var angle = Math.random() * 6.28;
-				var randX = homebase.x + Math.cos(angle) * spawnDistance;
-				var randY = homebase.y + Math.sin(angle) * -spawnDistance;
-				
-				var enemy = new Enemy(game, randX, randY, 'enemy', homebase);
+				documents.animations.play('docexplode');
+				game.camera.shake(0.01, 900);
+				var enemy = new Enemy(game, documents.x, documents.y, 'enemy', homebase);
 				game.add.existing(enemy);
 				enemies.add(enemy);
 			}
-			enemytimer = 0;
-		}
-
-		PUtimer++;
-		if(PUtimer >= (Math.random() * 600) + 500){
-			if(activePU < maxPU){
-				var angle = Math.random() * 6.28;
-				var randX = homebase.x + Math.cos(angle) * 250;
-				var randY = homebase.y + Math.sin(angle) * -250;
-				var PU = new PowerUp(game, randX, randY);
-				powerups.add(PU);
-				game.add.existing(PU);
-				activePU++;
+			else if(this.starttimer == 280){
+				files.animations.play('filesexplode');
+				game.camera.shake(0.01, 900);
+				var enemy = new Enemy(game, files.x, files.y, 'enemy', homebase);
+				game.add.existing(enemy);
+				enemies.add(enemy);
 			}
-			PUtimer = 0;
+			else if(this.starttimer == 260){
+				trash.animations.play('trashexplode');
+				game.camera.shake(0.01, 900);
+				var enemy = new Enemy(game, trash.x, trash.y, 'enemy', homebase);
+				game.add.existing(enemy);
+				enemies.add(enemy);
+			}
+			else if(this.starttimer == 200){
+				this.readyText.text = '2';
+			}
+			else if(this.starttimer == 100){
+				this.readyText.text = '1';
+				documents.kill();
+				trash.kill()
+				files.kill();
+			}
+			else if(this.starttimer == 0){
+				this.readyText.text = 'GO';
+				start = false;
+			}
 		}
+		else{
+			if (this.starttimer == -100){
+				this.readyText.text = '';
+			}
+			enemytimer++;
+			//every 5 seconds
+			if(enemytimer === 500){
+				console.log("spawn enemies");
+				//spawns random amount of enemies (1-10) at random location
+				var numEnemies = Math.random() * 7;
+				for(let x = 0; x < numEnemies; x++){
+					
+					//spawn enemies set distance away at random angle
+					var spawnDistance = 200;
+					var angle = Math.random() * 6.28;
+					var randX = homebase.x + Math.cos(angle) * spawnDistance;
+					var randY = homebase.y + Math.sin(angle) * -spawnDistance;
+					
+					var enemy = new Enemy(game, randX, randY, 'enemy', homebase);
+					game.add.existing(enemy);
+					enemies.add(enemy);
+				}
+				enemytimer = 0;
+			}
 
-		game.world.bringToTop(bullets);
-		game.world.bringToTop(pl);
+			PUtimer++;
+			if(PUtimer >= (Math.random() * 600) + 500){
+				if(activePU < maxPU){
+					var angle = Math.random() * 6.28;
+					var randX = homebase.x + Math.cos(angle) * 250;
+					var randY = homebase.y + Math.sin(angle) * -250;
+					var PU = new PowerUp(game, randX, randY);
+					powerups.add(PU);
+					game.add.existing(PU);
+					activePU++;
+				}
+				PUtimer = 0;
+			}
+
+			game.world.bringToTop(bullets);
+			game.world.bringToTop(pl);
+		}
 	}
 }
 
@@ -155,6 +229,7 @@ game.state.add('GameOver', GameOver);
 
 
 //make global variables so level doesn't have to be reloaded after game over state
+var start;
 var bullets;
 var player;
 var pl;

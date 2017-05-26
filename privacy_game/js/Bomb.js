@@ -1,7 +1,7 @@
 var Bomb = function(game, x, y) {
 	Phaser.Sprite.call(this, game, x, y, 'bomb');
 
-	game.physics.p2.enable(this, false);
+	//game.physics.p2.enable(this, false);
 	this.whatAmI = "bomb";
 	this.anchor.set(0.5);
 
