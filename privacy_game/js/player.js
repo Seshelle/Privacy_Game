@@ -146,6 +146,9 @@ function usePU(powerup){
 		case "Turret":
 			break;
 		case "Bomb":
+			var bomb = new Bomb(game, player.x, player.y);
+			bomb.body.static = true;
+			game.add.existing(bomb);
 			break;
 		case "Patch":
 			homebase.health = homebase.health + 30 > 100 ? 100 : homebase.health + 30;

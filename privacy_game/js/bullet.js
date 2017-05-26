@@ -8,7 +8,6 @@ function Bullet(game, x, y, key) {
 	this.whatAmI = 'bullet';
 
 	this.checkWorldBounds = true;
-	this.events.onOutOfBounds.add(this.bulletOut, this);
 
 	this.animations.add('animatebullet', [0, 1, 2, 3], 10, true);
 	this.animations.play('animatebullet'); //play animation

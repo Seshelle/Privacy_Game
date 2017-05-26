@@ -8,6 +8,8 @@ Preloader.prototype = {
 		game.load.image('player', 'assets/img/cursor.png');
 		game.load.image('enemy', 'assets/img/enemy.png');
 		game.load.image('home', 'assets/img/home.png');
+		game.load.spritesheet('bomb', 'assets/img/smartbomb.png', 28, 38);
+		game.load.spritesheet('Explosion', 'assets/img/smartBombExplosion.png', 98, 94);
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
 		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
