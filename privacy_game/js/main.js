@@ -110,7 +110,7 @@ Gameplay.prototype = {
     	//music.play();
 
     	start = true;
-    	this.starttimer = 600;
+    	this.starttimer = 350;
 	},
 	update: function() {
 		if(this.starttimer >= -100){
@@ -118,39 +118,37 @@ Gameplay.prototype = {
 		}
 		if(start){
 			homebase.score = 0;
-			if(this.starttimer == 400){
+			if(this.starttimer == 300){
+				this.readyText = game.add.text(game.world.width/2, game.world.height/2, '3', {fontSize: '48px', fill: '#000'});
+
 				documents.animations.play('docexplode');
 				game.camera.shake(0.01, 900);
 				var enemy = new Enemy(game, documents.x, documents.y, 'enemy', homebase);
 				game.add.existing(enemy);
 				enemies.add(enemy);
 			}
-			else if(this.starttimer == 380){
+			else if(this.starttimer == 280){
 				files.animations.play('filesexplode');
 				game.camera.shake(0.01, 900);
 				var enemy = new Enemy(game, files.x, files.y, 'enemy', homebase);
 				game.add.existing(enemy);
 				enemies.add(enemy);
 			}
-			else if(this.starttimer == 360){
+			else if(this.starttimer == 260){
 				trash.animations.play('trashexplode');
 				game.camera.shake(0.01, 900);
 				var enemy = new Enemy(game, trash.x, trash.y, 'enemy', homebase);
 				game.add.existing(enemy);
 				enemies.add(enemy);
 			}
-			else if(this.starttimer == 300){
-				this.readyText = game.add.text(game.world.width/2, game.world.height/2, '3', {fontSize: '48px', fill: '#000'});
-				game.camera.shake(0.005, 200);
-			}
 			else if(this.starttimer == 200){
 				this.readyText.text = '2';
-				documents.kill();
-				trash.kill()
-				files.kill();
 			}
 			else if(this.starttimer == 100){
 				this.readyText.text = '1';
+				documents.kill();
+				trash.kill()
+				files.kill();
 			}
 			else if(this.starttimer == 0){
 				this.readyText.text = 'GO';
