@@ -6,9 +6,16 @@ function Enemy(game, x, y, key, home) {
 	
 	console.log('enemy created');
 	
-	homeBase = home;
+	this.homeBase = home;
 	
 	this.body.whatAmI = "enemy";
+	this.previousDistance = 99999;
+	
+	this.scale.x = 0.01;
+	this.scale.y = 0.01;
+	this.spawnScale = 0;
+	
+	this.body.onBeginContact.add(hitWall, this);
 	
 	//radians = game.physics.arcade.angleBetween(this, homebase);
 	//degrees = radians * (180/Math.PI);
@@ -20,24 +27,47 @@ function Enemy(game, x, y, key, home) {
 Enemy.prototype = Object.create(Phaser.Sprite.prototype);
 Enemy.prototype.constructor = Enemy;
 
-var homeBase;
-var shortestDistance = 9999999;
-
 //override default update function
 Enemy.prototype.update = function() {
-	accelerateToObject(this,homeBase,30);
 	
-    var dx = this.x - homeBase.x;
-    var dy = this.y - homeBase.y;
-
+	var dx = this.x - this.homeBase.x;
+	var dy = this.y - this.homeBase.y;
     var distance = Math.sqrt(dx * dx + dy * dy);
 	
-	if (distance < shortestDistance){
-		shortestDistance = distance;
+	if (this.spawnScale < 1){
+		this.spawnScale += 0.015;
+		this.scale.x = this.spawnScale;
+		this.scale.y = this.spawnScale;
 	}
-	else if(distance > shortestDistance + 500){
-		console.log('enemy killed');
-		this.kill();
+	
+	if (this.previousDistance - distance < 0.1){
+		accelerateToObject(this,this.homeBase,30);
+	}
+	else{
+		accelerateToObject(this,this.homeBase,0);
+	}
+	
+	this.previousDistance = distance;
+	
+	/*else if(distance - this.shortestDistance > 200 || distance > 400){
+		console.log("enemy killed");
+		this.destroy();
+	}*/
+	
+	if (distance < 30){
+		this.homeBase.health -= 10;
+		this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
+		this.body.sprite.kill();
+		this.destroy();
+	}
+	
+
+}
+
+function hitWall (body, bodyB, shapeA, shapeB, equation) {
+	if(body == null){
+		this.body.sprite.kill();
+		this.destroy();
 	}
 }
 
