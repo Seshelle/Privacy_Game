@@ -66,6 +66,8 @@ Enemy.prototype.update = function() {
 
 function hitWall (body, bodyB, shapeA, shapeB, equation) {
 	if(body == null){
+		homebase.score++;
+	 	homebase.scoreText.text = 'Score: ' + homebase.score;
 		this.body.sprite.kill();
 		particleBurst(this.body);
 		this.destroy();

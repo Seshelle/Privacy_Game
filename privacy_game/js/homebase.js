@@ -30,12 +30,12 @@ Home.prototype.update = function() {
 		game.state.start('GameOver');
 	}
 
-	this.scoretimer++;
-	if(this.scoretimer % 100 == 0){
-		this.score++;
-		this.scoretimer = 0;
-		this.scoreText.text = 'Score: ' + this.score;
-	}
+	// this.scoretimer++;
+	// if(this.scoretimer % 100 == 0){
+	// 	this.score++;
+	// 	this.scoretimer = 0;
+	// 	this.scoreText.text = 'Score: ' + this.score;
+	// }
 
 	//enemy collision with home
 	//this.body.onBeginContact.add(homeHit, this);
