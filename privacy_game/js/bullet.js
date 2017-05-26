@@ -30,7 +30,6 @@ Bullet.prototype.bulletOut = function() {
 
 function hitEnemy (body, bodyB, shapeA, shapeB, equation) {
 	if (body != null && body.whatAmI == "enemy"){
-		//body.sprite.kill();
 		this.kill();
 		player.numBullets--;
 	}
@@ -40,4 +39,20 @@ function hitEnemy (body, bodyB, shapeA, shapeB, equation) {
 		this.kill();
 		player.numBullets--;
 	}
+}
+
+function particleBurst(enemy){
+	emitter.x = enemy.x;
+	emitter.y = enemy.y;
+
+    emitter.width = 10;
+    emitter.height = 10;
+    emitter.minParticleScale = 0.5;
+    emitter.maxParticleScale = 1;
+    emitter.minParticleSpeed.setTo(-200, -200);
+    emitter.maxParticleSpeed.setTo(200, 200);
+    emitter.gravity.set(0,0);
+
+	emitter.start(true, 500, null, 10);
+	emitter.update();
 }

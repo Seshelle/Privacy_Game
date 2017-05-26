@@ -51,6 +51,7 @@ Enemy.prototype.update = function() {
 	
 	/*else if(distance - this.shortestDistance > 200 || distance > 400){
 		console.log("enemy killed");
+		particleBurst(this.body);
 		this.destroy();
 	}*/
 	
@@ -77,4 +78,20 @@ function accelerateToObject(obj1, obj2, speed) {
     obj1.body.rotation = angle + game.math.degToRad(90);  // correct angle of angry bullets (depends on the sprite used)
     obj1.body.force.x = Math.cos(angle) * speed;    // accelerateToObject 
     obj1.body.force.y = Math.sin(angle) * speed;
+}
+
+function particleBurst(enemy){
+	emitter.x = enemy.x;
+	emitter.y = enemy.y;
+
+    emitter.width = 10;
+    emitter.height = 10;
+    emitter.minParticleScale = 0.5;
+    emitter.maxParticleScale = 1;
+    emitter.minParticleSpeed.setTo(-200, -200);
+    emitter.maxParticleSpeed.setTo(200, 200);
+    emitter.gravity.set(0,0);
+
+	emitter.start(true, 500, null, 10);
+	emitter.update();
 }

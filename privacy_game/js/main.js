@@ -10,6 +10,7 @@ Preloader.prototype = {
 		game.load.image('home', 'assets/img/home.png');
 		game.load.spritesheet('bomb', 'assets/img/smartbomb.png', 28, 38);
 		game.load.spritesheet('Explosion', 'assets/img/smartBombExplosion.png', 98, 94);
+		game.load.image('enemyparticle', 'assets/img/enemyParticle2.png');
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
 		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
@@ -80,6 +81,9 @@ Gameplay.prototype = {
 		music = game.add.audio('music');
         music.loop = true;
     	music.play();
+
+    	emitter = game.add.emitter(0, 0, 100);
+    	emitter.makeParticles('enemyparticle');
 	},
 	update: function() {
 		
@@ -161,6 +165,7 @@ var activePU = 0;
 var enemies;
 var homebase;
 var powerups;
+var emitter;
 
 //start game preloading
 game.state.start('Preloader');

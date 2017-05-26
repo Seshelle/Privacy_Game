@@ -15,7 +15,7 @@ var Player = function (game, x, y, frame) {
 	this.numBullets = 0;
 
 	this.currPowerup = "None";
-	this.powerupText = game.add.text(game.world.width - 400, game.world.height - 48, 'Power Up: None', {fontSize: '32px', fill: '#FFF'});
+	this.powerupText = game.add.text(game.world.width - 400, game.world.height - 40, 'Power Up: None', {fontSize: '20px', fill: '#FFF'});
 
 	this.fireKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	this.PUKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
