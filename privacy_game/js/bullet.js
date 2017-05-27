@@ -8,10 +8,11 @@ function Bullet(game, x, y, key) {
 	this.whatAmI = 'bullet';
 
 	this.checkWorldBounds = true;
-	this.events.onOutOfBounds.add(this.bulletOut, this);
 
-	this.animations.add('animate', [0, 1, 2, 3], 10, true);
-	this.animations.play('animate'); //play animation
+	this.spantimer = 1000;
+
+	this.animations.add('animatebullet', [0, 1, 2, 3], 10, true);
+	this.animations.play('animatebullet'); //play animation
 }
 
 //add to constructor to Bullet prototype
@@ -21,22 +22,27 @@ Bullet.prototype.constructor = Bullet;
 //override default update function
 Bullet.prototype.update = function() {
 	this.body.onBeginContact.add(hitEnemy, this);
+	this.spantimer--;
+	if(this.spantimer == 0){
+		player.numBullets = activeTurret ? player.numBullets : player.numBullets - 1;
+		this.destroy();
+		this.kill();
+	}
 }
 
 Bullet.prototype.bulletOut = function() {
+	this.destroy();
 	this.kill();
 	console.log('killed bullet');
-	player.numBullets--;
+	player.numBullets = activeTurret ? player.numBullets : player.numBullets - 1;
 }
 
 function hitEnemy (body, bodyB, shapeA, shapeB, equation) {
-	if (body != null && body.whatAmI == "enemy"){
-		//body.sprite.kill();
-		this.kill();
-		player.numBullets--;
+	if (body != null && body.whatAmI == "player"){
 	}
-	else if(body == null){
+	else{
+		this.destroy();
 		this.kill();
-		player.numBullets--;
+		player.numBullets = activeTurret ? player.numBullets : player.numBullets - 1;
 	}
 }
