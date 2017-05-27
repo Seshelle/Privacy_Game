@@ -22,7 +22,7 @@ MainMenu.prototype = {
 		//load assets
 	},
 	create: function(){
-        game.add.text(250, 165, 'Press space to play', {fontSize: '32px', fill: '#FFF'});
+        game.add.text(250, 165, 'Press space to play\nClick to move\nSpace to shoot\nW to use powerup\nProtect your computer, Push enemies off the side', {fontSize: '32px', fill: '#FFF'});
 
         game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 	},
