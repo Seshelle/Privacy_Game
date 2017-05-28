@@ -22,6 +22,13 @@ Preloader.prototype = {
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
 		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
+		
+		bulletMaterial = game.physics.p2.createMaterial('bulletMaterial');
+		enemyMaterial = game.physics.p2.createMaterial('enemyMaterial');
+		
+		contactMaterial = game.physics.p2.createContactMaterial(bulletMaterial, enemyMaterial);
+		contactMaterial.restitution = 0;
+		contactMaterial.friction = 100;
 	},
 	create: function(){
 		game.state.start('MainMenu');
@@ -271,6 +278,10 @@ var enemies;
 var homebase;
 var powerups;
 var emitter;
+
+var bulletMaterial;
+var enemyMaterial;
+var contactMaterial;
 
 //start game preloading
 game.state.start('Preloader');

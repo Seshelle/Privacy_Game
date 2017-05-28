@@ -26,6 +26,7 @@ function Enemy(game, x, y, key, home) {
 	this.body.damping = 0.7;
 	game.time.events.add(3000, lowerDrag, this, this.body);
 	
+	this.body.setMaterial(enemyMaterial);
 	this.body.onBeginContact.add(hitWall, this);
 }
 

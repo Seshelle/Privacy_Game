@@ -13,6 +13,8 @@ function Bullet(game, x, y, key) {
 
 	this.animations.add('animatebullet', [0, 1, 2, 3], 10, true);
 	this.animations.play('animatebullet'); //play animation
+	
+	this.body.setMaterial(bulletMaterial);
 }
 
 //add to constructor to Bullet prototype
@@ -24,25 +26,27 @@ Bullet.prototype.update = function() {
 	this.body.onBeginContact.add(hitEnemy, this);
 	this.spantimer--;
 	if(this.spantimer == 0){
-		player.numBullets = activeTurret ? player.numBullets : player.numBullets - 1;
-		this.destroy();
-		this.kill();
+		destroyBullet(this);
 	}
 }
 
-Bullet.prototype.bulletOut = function() {
+/*Bullet.prototype.bulletOut = function() {
 	this.destroy();
 	this.kill();
 	console.log('killed bullet');
 	player.numBullets = activeTurret ? player.numBullets : player.numBullets - 1;
-}
+}*/
 
 function hitEnemy (body, bodyB, shapeA, shapeB, equation) {
 	if (body != null && body.whatAmI == "player"){
 	}
 	else{
-		this.destroy();
-		this.kill();
-		player.numBullets = activeTurret ? player.numBullets : player.numBullets - 1;
+		game.time.events.add(30, destroyBullet, this, this);
 	}
+}
+
+function destroyBullet(bullet){
+	player.numBullets = activeTurret ? player.numBullets : player.numBullets - 1;
+	bullet.destroy();
+	bullet.kill();
 }
