@@ -85,21 +85,21 @@ Gameplay.prototype = {
 
 		documents = game.add.sprite(60, 60, 'documents');
 		documents.anchor.set(0.5);
-		//documents.animations.add('docidle', [0], 1, true);
-		//documents.animations.add('docexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		//documents.animations.play('docidle');
+		documents.animations.add('docidle', [0], 1, true);
+		documents.animations.add('docexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		documents.animations.play('docidle');
 
 		files = game.add.sprite(60, 157, 'files');
 		files.anchor.set(0.5);
-		//files.animations.add('filesidle', [0], 1, true);
-		//files.animations.add('filesexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		//files.animations.play('filesidle');
+		files.animations.add('filesidle', [0], 1, true);
+		files.animations.add('filesexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		files.animations.play('filesidle');
 
 		trash = game.add.sprite(60, 254, 'trash');
 		trash.anchor.set(0.5);
-		//trash.animations.add('trashidle', [0], 1, true);
-		//trash.animations.add('trashexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		//trash.animations.play('trashidle');
+		trash.animations.add('trashidle', [0], 1, true);
+		trash.animations.add('trashexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		trash.animations.play('trashidle');
 
 		this.readyText;
 
@@ -270,8 +270,6 @@ var bullets;
 var player;
 var pl;
 var activeTurret = false;
-var enemytimer = 0;
-var PUtimer = 0;
 var maxPU = 4;
 var activePU = 0;
 var enemies;

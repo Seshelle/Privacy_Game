@@ -22,7 +22,7 @@ function Enemy(game, x, y, key, home) {
 	this.maxSpeed = 0.2;
 	this.damage = 20;
 	
-	//I set the damping high at first so they don't go flying when spawned inside each other
+	//set the damping high at first so they don't go flying when spawned inside each other
 	this.body.damping = 0.7;
 	game.time.events.add(3000, lowerDrag, this, this.body);
 	
@@ -41,7 +41,7 @@ Enemy.prototype.update = function() {
 	var dy = this.y - this.homeBase.y;
     var distance = Math.sqrt(dx * dx + dy * dy);
 	
-	//if the enemy is still smal from spawning, gradually increase its size
+	//if the enemy is still small from spawning, gradually increase its size
 	if (this.spawnScale < 1){
 		this.spawnScale += 0.015;
 		this.scale.x = this.spawnScale;

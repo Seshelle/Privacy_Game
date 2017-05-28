@@ -30,17 +30,11 @@ Bullet.prototype.update = function() {
 	}
 }
 
-/*Bullet.prototype.bulletOut = function() {
-	this.destroy();
-	this.kill();
-	console.log('killed bullet');
-	player.numBullets = activeTurret ? player.numBullets : player.numBullets - 1;
-}*/
-
 function hitEnemy (body, bodyB, shapeA, shapeB, equation) {
 	if (body != null && body.whatAmI == "player"){
 	}
 	else{
+		//wait for 30 millisecends so that bullet can put force into enemy before disappearing
 		game.time.events.add(30, destroyBullet, this, this);
 	}
 }
