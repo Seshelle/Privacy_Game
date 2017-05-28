@@ -7,6 +7,8 @@ Preloader.prototype = {
 		game.load.image('bg', 'assets/img/background.png');
 		game.load.image('player', 'assets/img/cursor.png');
 		game.load.image('enemy', 'assets/img/enemy.png');
+		game.load.spritesheet('bigEnemy', 'assets/img/enemy4.png', 29, 36);
+		game.load.spritesheet('speedyEnemy', 'assets/img/enemy1small.png', 19, 12);
 		game.load.image('home', 'assets/img/home.png');
 		game.load.image('turretbase', 'assets/img/turret.png');
 		game.load.image('turrettop', 'assets/img/turrettop.png');
@@ -76,21 +78,21 @@ Gameplay.prototype = {
 
 		documents = game.add.sprite(60, 60, 'documents');
 		documents.anchor.set(0.5);
-		documents.animations.add('docidle', [0], 1, true);
-		documents.animations.add('docexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		documents.animations.play('docidle');
+		//documents.animations.add('docidle', [0], 1, true);
+		//documents.animations.add('docexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		//documents.animations.play('docidle');
 
 		files = game.add.sprite(60, 157, 'files');
 		files.anchor.set(0.5);
-		files.animations.add('filesidle', [0], 1, true);
-		files.animations.add('filesexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		files.animations.play('filesidle');
+		//files.animations.add('filesidle', [0], 1, true);
+		//files.animations.add('filesexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		//files.animations.play('filesidle');
 
 		trash = game.add.sprite(60, 254, 'trash');
 		trash.anchor.set(0.5);
-		trash.animations.add('trashidle', [0], 1, true);
-		trash.animations.add('trashexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		trash.animations.play('trashidle');
+		//trash.animations.add('trashidle', [0], 1, true);
+		//trash.animations.add('trashexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		//trash.animations.play('trashidle');
 
 		this.readyText;
 
@@ -123,6 +125,9 @@ Gameplay.prototype = {
 
     	start = true;
     	this.starttimer = 301;
+		
+		game.time.events.loop(8000, spawnEnemies, this);
+		game.time.events.loop(15000, spawnPowerUps, this);
 	},
 	update: function() {
 		if(this.starttimer >= -140){
@@ -175,40 +180,6 @@ Gameplay.prototype = {
 				trash.kill()
 				files.kill();
 			}
-			enemytimer++;
-			//every 5 seconds
-			if(enemytimer === 500){
-				console.log("spawn enemies");
-				//spawns random amount of enemies (1-10) at random location
-				var numEnemies = Math.random() * 7;
-				for(let x = 0; x < numEnemies; x++){
-					
-					//spawn enemies set distance away at random angle
-					var spawnDistance = 200;
-					var angle = Math.random() * 6.28;
-					var randX = homebase.x + Math.cos(angle) * spawnDistance;
-					var randY = homebase.y + Math.sin(angle) * -spawnDistance;
-					
-					var enemy = new Enemy(game, randX, randY, 'enemy', homebase);
-					game.add.existing(enemy);
-					enemies.add(enemy);
-				}
-				enemytimer = 0;
-			}
-
-			PUtimer++;
-			if(PUtimer >= (Math.random() * 600) + 500){
-				if(activePU < maxPU){
-					var angle = Math.random() * 6.28;
-					var randX = homebase.x + Math.cos(angle) * 250;
-					var randY = homebase.y + Math.sin(angle) * -250;
-					var PU = new PowerUp(game, randX, randY);
-					powerups.add(PU);
-					game.add.existing(PU);
-					activePU++;
-				}
-				PUtimer = 0;
-			}
 
 			game.world.bringToTop(bullets);
 			game.world.bringToTop(pl);
@@ -235,6 +206,45 @@ GameOver.prototype = {
 	},
 	toMenu: function(){
 		game.state.start('MainMenu');
+	}
+}
+
+function spawnEnemies(){
+	console.log("spawn enemies");
+	//spawns random amount of enemies (1-10) at random location
+	var numEnemies = Math.random() * 10;
+	for(let x = 0; x < numEnemies; x++){
+		
+		//spawn enemies set distance away at random angle
+		var spawnDistance = 200;
+		var angle = Math.random() * 6.28;
+		var randX = homebase.x + Math.cos(angle) * spawnDistance * 1.25;
+		var randY = homebase.y + Math.sin(angle) * -spawnDistance;
+		
+		var whatSpawns = Math.random() * 100;
+		if (whatSpawns <= 10){
+			var enemy = new HeavyEnemy(game, randX, randY, 'bigEnemy', homebase);
+		}
+		else if(whatSpawns <= 30){
+			var enemy = new SpeedyEnemy(game, randX, randY, 'speedyEnemy', homebase);
+		}
+		else{
+			var enemy = new Enemy(game, randX, randY, 'enemy', homebase);
+		}
+		game.add.existing(enemy);
+		enemies.add(enemy);
+	}
+}
+
+function spawnPowerUps(){
+	if(activePU < maxPU){
+		var angle = Math.random() * 6.28;
+		var randX = homebase.x + Math.cos(angle) * 250;
+		var randY = homebase.y + Math.sin(angle) * -250;
+		var PU = new PowerUp(game, randX, randY);
+		powerups.add(PU);
+		game.add.existing(PU);
+		activePU++;
 	}
 }
 
