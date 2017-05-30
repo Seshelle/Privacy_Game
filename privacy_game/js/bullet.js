@@ -14,6 +14,8 @@ function Bullet(game, x, y, key) {
 	this.animations.add('animatebullet', [0, 1, 2, 3], 10, true);
 	this.animations.play('animatebullet'); //play animation
 	
+	this.body.onBeginContact.add(hitEnemy, this);
+	
 	this.body.setMaterial(bulletMaterial);
 }
 
@@ -23,7 +25,7 @@ Bullet.prototype.constructor = Bullet;
 
 //override default update function
 Bullet.prototype.update = function() {
-	this.body.onBeginContact.add(hitEnemy, this);
+	
 	this.spantimer--;
 	if(this.spantimer == 0){
 		destroyBullet(this);
@@ -31,9 +33,7 @@ Bullet.prototype.update = function() {
 }
 
 function hitEnemy (body, bodyB, shapeA, shapeB, equation) {
-	if (body != null && body.whatAmI == "player"){
-	}
-	else{
+	if (body == null || body.whatAmI != "player" && body.whatAmI != 'turretgun'){
 		//wait for 30 millisecends so that bullet can put force into enemy before disappearing
 		game.time.events.add(30, destroyBullet, this, this);
 	}

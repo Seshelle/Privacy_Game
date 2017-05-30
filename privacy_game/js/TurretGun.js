@@ -1,7 +1,8 @@
 TurretGun = function (game, x, y) {
 	Phaser.Sprite.call(this, game, x, y, 'turrettop');
 	game.physics.p2.enable(this, false);
-	this.whatAmI = "turretgun";
+	this.body.data.shapes[0].sensor=true;
+	this.body.whatAmI = "turretgun";
 	this.anchor.set(0.5);
 	this.shoottimer = 10;
 

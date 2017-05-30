@@ -9,6 +9,8 @@ Preloader.prototype = {
 		game.load.image('enemy', 'assets/img/enemy.png');
 		game.load.spritesheet('bigEnemy', 'assets/img/enemy4.png', 29, 36);
 		game.load.spritesheet('speedyEnemy', 'assets/img/enemy1small.png', 19, 12);
+		game.load.spritesheet('fakePU', 'assets/img/enemydisguised.png', 28, 28);
+		game.load.spritesheet('randomEnemy', 'assets/img/enemy2.png', 28, 27);
 		game.load.image('home', 'assets/img/home.png');
 		game.load.image('turretbase', 'assets/img/turret.png');
 		game.load.image('turrettop', 'assets/img/turrettop.png');
@@ -85,21 +87,21 @@ Gameplay.prototype = {
 
 		documents = game.add.sprite(60, 60, 'documents');
 		documents.anchor.set(0.5);
-		documents.animations.add('docidle', [0], 1, true);
-		documents.animations.add('docexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		documents.animations.play('docidle');
+		//documents.animations.add('docidle', [0], 1, true);
+		//documents.animations.add('docexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		//documents.animations.play('docidle');
 
 		files = game.add.sprite(60, 157, 'files');
 		files.anchor.set(0.5);
-		files.animations.add('filesidle', [0], 1, true);
-		files.animations.add('filesexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		files.animations.play('filesidle');
+		//files.animations.add('filesidle', [0], 1, true);
+		//files.animations.add('filesexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		//files.animations.play('filesidle');
 
 		trash = game.add.sprite(60, 254, 'trash');
 		trash.anchor.set(0.5);
-		trash.animations.add('trashidle', [0], 1, true);
-		trash.animations.add('trashexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		trash.animations.play('trashidle');
+		//trash.animations.add('trashidle', [0], 1, true);
+		//trash.animations.add('trashexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		//trash.animations.play('trashidle');
 
 		this.readyText;
 
@@ -218,8 +220,11 @@ GameOver.prototype = {
 
 function spawnEnemies(){
 	console.log("spawn enemies");
-	//spawns random amount of enemies (1-10) at random location
-	var numEnemies = Math.random() * 10;
+	
+	//spawns random amount of enemies depending on difficulty at random location
+	var numEnemies = Math.random() * (difficulty/10) + 4;
+	difficulty++;
+	
 	for(let x = 0; x < numEnemies; x++){
 		
 		//spawn enemies set distance away at random angle
@@ -228,12 +233,17 @@ function spawnEnemies(){
 		var randX = homebase.x + Math.cos(angle) * spawnDistance * 1.25;
 		var randY = homebase.y + Math.sin(angle) * -spawnDistance;
 		
+		//create a biased list of possibilities for enemy spawns
+		//special enemies have increased chances over time
 		var whatSpawns = Math.random() * 100;
 		if (whatSpawns <= 10){
 			var enemy = new HeavyEnemy(game, randX, randY, 'bigEnemy', homebase);
 		}
-		else if(whatSpawns <= 30){
+		else if(whatSpawns <= 20){
 			var enemy = new SpeedyEnemy(game, randX, randY, 'speedyEnemy', homebase);
+		}
+		else if(whatSpawns <= 30){
+			var enemy = new RandomEnemy(game, randX, randY, 'randomEnemy', homebase);
 		}
 		else{
 			var enemy = new Enemy(game, randX, randY, 'enemy', homebase);
@@ -246,12 +256,25 @@ function spawnEnemies(){
 function spawnPowerUps(){
 	if(activePU < maxPU){
 		var angle = Math.random() * 6.28;
-		var randX = homebase.x + Math.cos(angle) * 250;
-		var randY = homebase.y + Math.sin(angle) * -250;
-		var PU = new PowerUp(game, randX, randY);
-		powerups.add(PU);
-		game.add.existing(PU);
-		activePU++;
+		var randX = homebase.x + Math.cos(angle) * 225 * 1.25;
+		var randY = homebase.y + Math.sin(angle) * -225;
+		
+		//the likelihood of a powerup being fake increases with difficulty
+		var fakeChance = difficulty/300;
+		if (fakeChance > 0.3) {
+			fakeChance = 0.3;
+		}
+		if (/*Math.random() <= fakeChance*/ true){
+			var enemy = new FakePowerup(game, randX, randY, 'fakePU', homebase);
+			game.add.existing(enemy);
+			enemies.add(enemy);
+		}
+		else{
+			var PU = new PowerUp(game, randX, randY);
+			powerups.add(PU);
+			game.add.existing(PU);
+			activePU++;
+		}
 	}
 }
 
@@ -266,16 +289,21 @@ game.state.add('GameOver', GameOver);
 
 //make global variables so level doesn't have to be reloaded after game over state
 var start;
+
 var bullets;
 var player;
 var pl;
+var enemies;
+
 var activeTurret = false;
 var maxPU = 4;
 var activePU = 0;
-var enemies;
+
 var homebase;
 var powerups;
 var emitter;
+
+var difficulty = 0;
 
 var bulletMaterial;
 var enemyMaterial;
