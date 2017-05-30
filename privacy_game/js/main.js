@@ -264,7 +264,7 @@ function spawnPowerUps(){
 		if (fakeChance > 0.3) {
 			fakeChance = 0.3;
 		}
-		if (/*Math.random() <= fakeChance*/ true){
+		if (Math.random() <= fakeChance){
 			var enemy = new FakePowerup(game, randX, randY, 'fakePU', homebase);
 			game.add.existing(enemy);
 			enemies.add(enemy);
