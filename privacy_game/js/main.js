@@ -24,6 +24,7 @@ Preloader.prototype = {
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
 		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
+		game.load.audio('enemyEntersSafe2', ['assets/audio/enemyEntersSafe2.mp3', 'assets/audio/enemyEntersSafe2.ogg']);
 		
 		bulletMaterial = game.physics.p2.createMaterial('bulletMaterial');
 		enemyMaterial = game.physics.p2.createMaterial('enemyMaterial');
@@ -125,7 +126,7 @@ Gameplay.prototype = {
 		homebase = new Home(game, 'home');
 		game.add.existing(homebase);
 
-		music = game.add.audio('music');
+			music = game.add.audio('music');
         music.loop = true;
     	music.play();
 
