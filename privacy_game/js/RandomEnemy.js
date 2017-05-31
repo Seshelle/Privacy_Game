@@ -6,6 +6,9 @@ function RandomEnemy(game, x, y, key, home) {
 	this.looper = game.time.events.loop(750, moveRandomly, this, this, this.homeBase);
 	game.time.events.add(2000, increaseAcc, this, this);
 	this.body.onBeginContact.add(hitEdge, this, this.body);
+
+	this.animations.add('idle', [0, 1, 2, 3, 4, 5, 6], 10, true);
+	this.animations.play('idle');
 }
 
 //add to constructor to RandomEnemy prototype

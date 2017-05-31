@@ -13,6 +13,11 @@ function Home(game, key, frame) {
 	this.healthText = game.add.text(550, game.world.height + 10, 'Health: 100', {fontSize: '20px', fill: '#000'});
 
 	this.healthText.fixedToCamera = true;
+
+	this.animations.add('idle', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+	this.animations.play('idle');
+
+	this.animations.add('damaged', [12, 0], 1, false);
 	
 	//this.body.static = true;
 	

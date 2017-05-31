@@ -6,12 +6,12 @@ Preloader.prototype = {
 		game.physics.p2.setImpactEvents(true);
 		game.load.image('bg', 'assets/img/background.png');
 		game.load.image('player', 'assets/img/cursor.png');
-		game.load.image('enemy', 'assets/img/enemy.png');
+		game.load.spritesheet('enemy', 'assets/img/enemy1.png', 29, 17);
 		game.load.spritesheet('bigEnemy', 'assets/img/enemy4.png', 29, 36);
 		game.load.spritesheet('speedyEnemy', 'assets/img/enemy1small.png', 19, 12);
 		game.load.spritesheet('fakePU', 'assets/img/enemydisguised.png', 28, 28);
-		game.load.spritesheet('randomEnemy', 'assets/img/enemy2.png', 28, 27);
-		game.load.image('home', 'assets/img/home.png');
+		game.load.spritesheet('randomEnemy', 'assets/img/enemy2.png', 30, 27);
+		game.load.spritesheet('home', 'assets/img/home.png', 83, 86);
 		game.load.image('turretbase', 'assets/img/turret.png');
 		game.load.image('turrettop', 'assets/img/turrettop.png');
 		game.load.spritesheet('files', 'assets/img/files.png', 67, 77);
@@ -19,7 +19,7 @@ Preloader.prototype = {
 		game.load.spritesheet('trash', 'assets/img/trash.png', 67, 77);
 		game.load.spritesheet('toolbar', 'assets/img/toolbar.png', 1026, 44);
 		game.load.spritesheet('bomb', 'assets/img/smartbomb.png', 28, 38);
-		game.load.spritesheet('Explosion', 'assets/img/smartBombExplosion.png', 98, 94);
+		game.load.spritesheet('Explosion', 'assets/img/smartBombExplosion.png', 94, 94);
 		game.load.image('enemyparticle', 'assets/img/enemyParticle2.png');
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
@@ -87,21 +87,21 @@ Gameplay.prototype = {
 
 		documents = game.add.sprite(60, 60, 'documents');
 		documents.anchor.set(0.5);
-		//documents.animations.add('docidle', [0], 1, true);
-		//documents.animations.add('docexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		//documents.animations.play('docidle');
+		documents.animations.add('docidle', [0], 1, true);
+		documents.animations.add('docexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		documents.animations.play('docidle');
 
 		files = game.add.sprite(60, 157, 'files');
 		files.anchor.set(0.5);
-		//files.animations.add('filesidle', [0], 1, true);
-		//files.animations.add('filesexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		//files.animations.play('filesidle');
+		files.animations.add('filesidle', [0], 1, true);
+		files.animations.add('filesexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		files.animations.play('filesidle');
 
 		trash = game.add.sprite(60, 254, 'trash');
 		trash.anchor.set(0.5);
-		//trash.animations.add('trashidle', [0], 1, true);
-		//trash.animations.add('trashexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
-		//trash.animations.play('trashidle');
+		trash.animations.add('trashidle', [0], 1, true);
+		trash.animations.add('trashexplode', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20], 10, false);
+		trash.animations.play('trashidle');
 
 		this.readyText;
 
@@ -120,8 +120,6 @@ Gameplay.prototype = {
 
 		powerups = this.game.add.group();
 
-		//game.camera.follow(player, Phaser.Camera.FOLLOW_LOCKON, 0.5, 0.5);
-
 		homebase = new Home(game, 'home');
 		game.add.existing(homebase);
 
@@ -136,7 +134,7 @@ Gameplay.prototype = {
     	this.starttimer = 301;
 		
 		game.time.events.loop(8000, spawnEnemies, this);
-		game.time.events.loop(15000, spawnPowerUps, this);
+		game.time.events.loop(10000, spawnPowerUps, this);
 	},
 	update: function() {
 		if(this.starttimer >= -140){

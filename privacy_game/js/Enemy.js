@@ -28,6 +28,9 @@ function Enemy(game, x, y, key, home) {
 	
 	this.body.setMaterial(enemyMaterial);
 	this.body.onBeginContact.add(hitWall, this);
+
+	this.animations.add('idle', [0, 1, 2, 3, 4, 5], 10, true);
+	this.animations.play('idle');
 }
 
 //add to constructor to Enemy prototype
@@ -60,6 +63,10 @@ Enemy.prototype.update = function() {
 	if (distance < 40){
 		this.homeBase.health -= this.damage;
 		this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
+		this.homeBase.animations.play('damaged');
+		//if(this.homeBase.animations.currentAnim.frame == 0){
+		//	this.homeBase.animations.play('idle');
+		//}
 		this.kill();
 		this.destroy();
 	}
