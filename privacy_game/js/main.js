@@ -24,8 +24,58 @@ Preloader.prototype = {
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
 		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
-		game.load.audio('enemyEntersSafe2', ['assets/audio/enemyEntersSafe2.mp3', 'assets/audio/enemyEntersSafe2.ogg']);
 		
+		//enemies sound
+		game.load.audio('enemyEntersSafe2', ['assets/audio/enemyEntersSafe2.mp3', 'assets/audio/enemyEntersSafe2.ogg']);
+		game.load.audio('enemySappingHP', ['assets/audio/enemySappingHP.mp3', 'assets/audio/enemyenemySappingHP.ogg']);
+		game.load.audio('enemyBombDetonate', ['assets/audio/enemyBombDetonate.mp3', 'assets/audio/enemyBombDetonate.ogg']);
+		game.load.audio('enemyDeath2', ['assets/audio/enemyDeath2.mp3', 'assets/audio/enemyDeath2.ogg']);
+		game.load.audio('enemyDeath', ['assets/audio/enemyDeath.mp3', 'assets/audio/enemyDeath.ogg']);
+		game.load.audio('aboutToLose', ['assets/audio/aboutToLose.mp3', 'assets/audio/aboutToLose.ogg']);
+		game.load.audio('enemyEntersSafe3', ['assets/audio/enemyEntersSafe3.mp3', 'assets/audio/enemyEntersSafe3.ogg']);
+		game.load.audio('enemyEntersSafe1', ['assets/audio/enemyEntersSafe1.mp3', 'assets/audio/enemyEntersSafe1.ogg']);
+
+		//player sound
+		game.load.audio('playerShoot', ['assets/audio/playerShoot.mp3', 'assets/audio/playerShoot.ogg']);
+		game.load.audio('playerMove', ['assets/audio/playerMove.mp3', 'assets/audio/playerMove.ogg']);
+		game.load.audio('playerHitEnemy5', ['assets/audio/playerHitEnemy5.mp3', 'assets/audio/playerHitEnemy5.ogg']);
+		game.load.audio('playerHitEnemy4', ['assets/audio/playerHitEnemy4.mp3', 'assets/audio/playerHitEnemy4.ogg']);
+		game.load.audio('playerHitEnemy3', ['assets/audio/playerHitEnemy3.mp3', 'assets/audio/playerHitEnemy3.ogg']);
+		game.load.audio('playerHitEnemy2', ['assets/audio/playerHitEnemy2.mp3', 'assets/audio/playerHitEnemy2.ogg']);
+		game.load.audio('playerHitEnemy', ['assets/audio/playerHitEnemy.mp3', 'assets/audio/playerHitEnemy.ogg']);
+
+		//power-ups
+		game.load.audio('powerupSpawn3', ['assets/audio/powerupSpawn3.mp3', 'assets/audio/powerupSpawn3.ogg']);
+		game.load.audio('powerupSpawn2', ['assets/audio/powerupSpawn2.mp3', 'assets/audio/powerupSpawn2.ogg']);
+		game.load.audio('powerupSpawn1', ['assets/audio/powerupSpawn1.mp3', 'assets/audio/powerupSpawn1.ogg']);
+		game.load.audio('powerupPickup3', ['assets/audio/powerupPickup3.mp3', 'assets/audio/powerupPickup3.ogg']);
+		game.load.audio('powerupPickup2', ['assets/audio/powerupPickup2.mp3', 'assets/audio/powerupPickup2.ogg']);
+		game.load.audio('powerupPickup1', ['assets/audio/powerupPickup1.mp3', 'assets/audio/powerupPickup1.ogg']);
+
+		//turret
+		game.load.audio('turretFire', ['assets/audio/turretFire.mp3', 'assets/audio/turretFire.ogg']);
+		game.load.audio('turretLaserFire', ['assets/audio/turretLaserFire.mp3', 'assets/audio/turretLaserFire.ogg']);
+		game.load.audio('turretPlacement', ['assets/audio/turretPlacement.mp3', 'assets/audio/turretPlacement.ogg']);
+
+		//smartbomb
+		game.load.audio('smartBombTick', ['assets/audio/smartBombTick.mp3', 'assets/audio/smartBombTick.ogg']);
+		game.load.audio('smartBombPlacement', ['assets/audio/smartBombPlacement.mp3', 'assets/audio/smartBombPlacement.ogg']);
+		game.load.audio('smartBombExplode', ['assets/audio/smartBombExplode.mp3', 'assets/audio/smartBombExplode.ogg']);
+
+		//slow down time
+		game.load.audio('powerupSlowDown', ['assets/audio/powerupSlowDown.mp3', 'assets/audio/powerupSlowDown.ogg']);
+		game.load.audio('powerupNormalSpeed', ['assets/audio/powerupNormalSpeed.mp3', 'assets/audio/powerupNormalSpeed.ogg']);
+
+		//health
+		game.load.audio('powerupHeal', ['assets/audio/powerupHeal.mp3', 'assets/audio/powerupHeal.ogg']);
+
+		//UI
+		game.load.audio('pause', ['assets/audio/pause.mp3', 'assets/audio/pause.ogg']);
+		game.load.audio('mouseHoverOverUIButton', ['assets/audio/mouseHoverOverUIButton.mp3', 'assets/audio/mouseHoverOverUIButton.ogg']);
+		game.load.audio('invalid (mouse clicking on greyed out button)', ['assets/audio/invalid (mouse clicking on greyed out button).mp3', 'assets/audio/invalid (mouse clicking on greyed out button).ogg']);
+		game.load.audio('accept (mouse clicking on UI button)', ['assets/audio/accept (mouse clicking on UI button).mp3', 'assets/audio/accept (mouse clicking on UI button).ogg']);
+
+
 		bulletMaterial = game.physics.p2.createMaterial('bulletMaterial');
 		enemyMaterial = game.physics.p2.createMaterial('enemyMaterial');
 		
