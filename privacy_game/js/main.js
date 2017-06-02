@@ -30,20 +30,22 @@ var MainMenu = function(game){};
 MainMenu.prototype = {
 	preload: function(){
 		//load assets
+		game.load.image('menu', 'assets/img/mainMenu.png'); 
+		game.load.image('playButton', 'assets/img/play.png');
+		game.load.image('helpButton', 'assets/img/help.png');
 	},
 	create: function(){
-        game.add.text(16, 165, 'Press space to play\nHold mouse to move, space to shoot, W to use powerup', {fontSize: '32px', fill: '#FFF'});
-
+        game.add.sprite(0, 0, 'menu');
+        //add buttons 
+        var playButton = game.add.button(415.25, 355, 'playButton', this.startGame);
+        var helpButton = game.add.button(586.25, 355, 'helpButton', this.helpScreen);
         game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
 	},
-	update: function(){
-		//spacebar press to go to next state
-		this.key = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-		this.key.onDown.add(this.gofull, this);
-		if(this.key.justPressed()){
-			console.log('Goto Game');
-			game.state.start('Gameplay');
-		}
+	startGame: function(){
+		game.state.start('Gameplay');
+	},
+	helpScreen: function(){
+		game.state.start('Help');
 	},
 	gofull: function() {
 
@@ -56,6 +58,22 @@ MainMenu.prototype = {
 	        game.scale.startFullScreen(false);
 	    }
 
+	}
+}
+var Help = function(){};
+Help.prototype = {
+	preload: function() {
+		//load assets
+		game.load.image('help', 'assets/img/gameHelp.png');
+		game.load.image('exit', 'assets/img/exit.png');
+	},
+	create: function() {
+		game.add.sprite(0, 0, 'help');
+		//make exit button
+		var helpButton = game.add.button(875, 78, 'exit', this.return);
+	},
+	return: function(){
+		game.state.start('MainMenu');
 	}
 }
 
@@ -212,16 +230,22 @@ Gameplay.prototype = {
 //Game Over state
 var GameOver = function() {};
 GameOver.prototype = {
-	preload: function(){
+		preload: function(){
+		game.load.image('gameOver', 'assets/img/gameOver.png');
+		game.load.image('replay', 'assets/img/replay.png');
+		game.load.image('return', 'assets/img/returnMenu.png');
 	},
 	create: function(){
-		game.add.text(100, 100, 'Game Over, press space to play again', {fontSize: '32px', fill: '#FFFFFF'});
+		game.add.sprite(0,0, 'gameOver');
+		//add buttons
+		var replayButton = game.add.button(45, 300, 'replay', this.startGame);
+        var menuButton = game.add.button(45, 420, 'return', this.toMenu);
 	},
-	update: function(){
-		if(game.input.keyboard.isDown(Phaser.Keyboard.SPACEBAR)){
-			console.log('Goto Menu');
-			game.state.start('MainMenu');
-		}
+	startGame: function(){
+		game.state.start('Gameplay');
+	},
+	toMenu: function(){
+		game.state.start('MainMenu');
 	}
 }
 
@@ -231,6 +255,7 @@ game.state.add('Preloader', Preloader);
 game.state.add('Gameplay', Gameplay);
 game.state.add('MainMenu', MainMenu);
 game.state.add('GameOver', GameOver);
+game.state.add('Help', Help);
 
 
 //make global variables so level doesn't have to be reloaded after game over state
