@@ -73,8 +73,20 @@ MainMenu.prototype = {
 }
 var Help = function(){};
 Help.prototype = {
-
-};
+	preload: function() {
+		//load assets
+		game.load.image('help', 'assets/img/gameHelp.png');
+		game.load.image('exit', 'assets/img/exit.png');
+	},
+	create: function() {
+		game.add.sprite(0, 0, 'help');
+		//make exit button
+		var helpButton = game.add.button(875, 78, 'exit', this.return);
+	},
+	return: function(){
+		game.state.start('MainMenu');
+	}
+}
 
 var Gameplay = function() {};
 Gameplay.prototype = {
@@ -283,6 +295,7 @@ game.state.add('Gameplay', Gameplay);
 game.state.add('Help'. Help);
 game.state.add('MainMenu', MainMenu);
 game.state.add('GameOver', GameOver);
+game.state.add('Help', Help);
 
 
 //make global variables so level doesn't have to be reloaded after game over state
