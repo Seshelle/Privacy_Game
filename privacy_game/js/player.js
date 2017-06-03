@@ -152,6 +152,7 @@ function usePU(powerup){
 		case "Turret":
 			if(!activeTurret){
 				activeTurret = true;
+				turretPlacement.play();
 				var turret = new Turret(game, homebase.x, homebase.y);
 				game.add.existing(turret);
 				player.currPowerup = "None";
@@ -164,9 +165,11 @@ function usePU(powerup){
 			var bomb = new Bomb(game, player.x, player.y);
 			//bomb.body.static = true;
 			game.add.existing(bomb);
+			smartBombPlacement.play();
 			player.currPowerup = "None";
 			break;
 		case "Patch":
+			powerupHeal.play();
 			homebase.health = homebase.health + 30 > 100 ? 100 : homebase.health + 30;
 			homebase.healthText.text = 'Health: ' + homebase.health;
 			player.currPowerup = "None";

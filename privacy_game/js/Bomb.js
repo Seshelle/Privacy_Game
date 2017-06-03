@@ -17,6 +17,7 @@ Bomb.prototype.constructor = Bomb;
 Bomb.prototype.update = function () {
 	if (this.animations.currentAnim.frame == 24){
 		console.log('explode!');
+		smartBombExplode.play();
 		var explode = new Explosion(game, this.x, this.y, 'Explosion');
 		explode.body.static = true;
 		game.add.existing(explode);
