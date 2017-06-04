@@ -67,6 +67,8 @@ Enemy.prototype.update = function() {
 		//if(this.homeBase.animations.currentAnim.frame == 0){
 		//	this.homeBase.animations.play('idle');
 		//}
+		aboutToLose.play();
+		game.camera.shake(0.005, 900);
 		this.kill();
 		this.destroy();
 	}
@@ -79,6 +81,11 @@ function hitWall (body, bodyB, shapeA, shapeB, equation) {
 		this.body.sprite.kill();
 		particleBurst(this.body);
 		this.destroy();
+		deathSound = Math.floor(Math.random() * 2);
+		if(deathSound)
+			enemyDeath.play();
+		else
+			enemyDeath2.play();
 	}
 }
 

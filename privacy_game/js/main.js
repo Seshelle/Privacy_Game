@@ -23,11 +23,11 @@ Preloader.prototype = {
 		game.load.image('enemyparticle', 'assets/img/enemyParticle2.png');
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
-		game.load.audio('music', ['assets/audio/track3.mp3', 'assets/audio/track3.ogg']);
+		game.load.audio('music', ['assets/audio/track.mp3', 'assets/audio/track.ogg']);
 		
 		//enemies sound
 		game.load.audio('enemyEntersSafe2', ['assets/audio/enemyEntersSafe2.mp3', 'assets/audio/enemyEntersSafe2.ogg']);
-		game.load.audio('enemySappingHP', ['assets/audio/enemySappingHP.mp3', 'assets/audio/enemyenemySappingHP.ogg']);
+		game.load.audio('enemySappingHP', ['assets/audio/enemySappingHP.mp3', 'assets/audio/enemySappingHP.ogg']);
 		game.load.audio('enemyBombDetonate', ['assets/audio/enemyBombDetonate.mp3', 'assets/audio/enemyBombDetonate.ogg']);
 		game.load.audio('enemyDeath2', ['assets/audio/enemyDeath2.mp3', 'assets/audio/enemyDeath2.ogg']);
 		game.load.audio('enemyDeath', ['assets/audio/enemyDeath.mp3', 'assets/audio/enemyDeath.ogg']);
@@ -54,7 +54,6 @@ Preloader.prototype = {
 
 		//turret
 		game.load.audio('turretFire', ['assets/audio/turretFire.mp3', 'assets/audio/turretFire.ogg']);
-		game.load.audio('turretLaserFire', ['assets/audio/turretLaserFire.mp3', 'assets/audio/turretLaserFire.ogg']);
 		game.load.audio('turretPlacement', ['assets/audio/turretPlacement.mp3', 'assets/audio/turretPlacement.ogg']);
 
 		//smartbomb
@@ -63,17 +62,16 @@ Preloader.prototype = {
 		game.load.audio('smartBombExplode', ['assets/audio/smartBombExplode.mp3', 'assets/audio/smartBombExplode.ogg']);
 
 		//slow down time
-		game.load.audio('powerupSlowDown', ['assets/audio/powerupSlowDown.mp3', 'assets/audio/powerupSlowDown.ogg']);
+		//game.load.audio('powerupSlowDown', ['assets/audio/powerupSlowDown.mp3', 'assets/audio/powerupSlowDown.ogg']);
 		game.load.audio('powerupNormalSpeed', ['assets/audio/powerupNormalSpeed.mp3', 'assets/audio/powerupNormalSpeed.ogg']);
 
 		//health
 		game.load.audio('powerupHeal', ['assets/audio/powerupHeal.mp3', 'assets/audio/powerupHeal.ogg']);
 
 		//UI
-		game.load.audio('pause', ['assets/audio/pause.mp3', 'assets/audio/pause.ogg']);
 		game.load.audio('mouseHoverOverUIButton', ['assets/audio/mouseHoverOverUIButton.mp3', 'assets/audio/mouseHoverOverUIButton.ogg']);
-		game.load.audio('invalid (mouse clicking on greyed out button)', ['assets/audio/invalid (mouse clicking on greyed out button).mp3', 'assets/audio/invalid (mouse clicking on greyed out button).ogg']);
-		game.load.audio('accept (mouse clicking on UI button)', ['assets/audio/accept (mouse clicking on UI button).mp3', 'assets/audio/accept (mouse clicking on UI button).ogg']);
+		game.load.audio('accept', ['assets/audio/accept.mp3', 'assets/audio/accept.ogg']);
+
 
 
 		bulletMaterial = game.physics.p2.createMaterial('bulletMaterial');
@@ -85,6 +83,47 @@ Preloader.prototype = {
 	},
 	create: function(){
 		game.state.start('MainMenu');
+
+		enemyEntersSafe1 = game.add.audio('enemyEntersSafe1');
+    	enemyEntersSafe2 = game.add.audio('enemyEntersSafe2');
+    	enemyEntersSafe3 = game.add.audio('enemyEntersSafe3');
+    	enemySappingHP = game.add.audio('enemySappingHP');
+    	enemyBombDetonate = game.add.audio('enemyBombDetonate');
+    	enemyDeath = game.add.audio('enemyDeath');
+    	enemyDeath2 = game.add.audio('enemyDeath2');
+    	aboutToLose = game.add.audio('aboutToLose');
+
+    	playerShoot = game.add.audio("playerShoot");
+    	playerMove = game.add.audio('playerMove');
+    	playerHitEnemy = game.add.audio('playerHitEnemy');
+    	playerHitEnemy2 = game.add.audio('playerHitEnemy2');
+    	playerHitEnemy3 = game.add.audio('playerHitEnemy3');
+    	playerHitEnemy4	= game.add.audio('playerHitEnemy4');
+    	playerHitEnemy5 = game.add.audio('playerHitEnemy5');
+
+    	powerupSpawn1 = game.add.audio('powerupSpawn1');
+    	powerupSpawn2 = game.add.audio('powerupSpawn2');
+    	powerupSpawn3 = game.add.audio('powerupSpawn3');
+    	powerupPickup1 = game.add.audio('powerupPickup1');
+    	powerupPickup2 = game.add.audio('powerupPickup2');
+    	powerupPickup3 = game.add.audio('powerupPickup3');
+
+    	turretFire = game.add.audio('turretFire');
+    	turretPlacement = game.add.audio('turretPlacement');
+
+    	smartBombTick = game.add.audio('smartBombTick');
+    	smartBombPlacement = game.add.audio('smartBombPlacement');
+    	smartBombExplode = game.add.audio('smartBombExplode');
+
+    	powerupHeal = game.add.audio('powerupHeal');
+
+    	powerupNormalSpeed = game.add.audio('powerupNormalSpeed');
+
+    	mouseHoverOverUIButton = game.add.audio('mouseHoverOverUIButton');
+    	accept = game.add.audio('accept');
+
+		music = game.add.audio('music');
+        music.loop = true;
 	}
 }
 
@@ -99,14 +138,40 @@ MainMenu.prototype = {
 	create: function(){
         game.add.sprite(0, 0, 'menu');
         //add buttons 
-        var playButton = game.add.button(415.25, 355, 'playButton', this.startGame);
-        var helpButton = game.add.button(586.25, 355, 'helpButton', this.helpScreen);
+        playButton = game.add.button(415.25, 355, 'playButton', this.startGame);
+        helpButton = game.add.button(586.25, 355, 'helpButton', this.helpScreen);
         game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    	music.play();
+    	hoveroverp = false;
+    	hoveroverh = false;
+	},
+	update: function(){
+		if (playButton.input.pointerOver() && !hoveroverp){
+	        playButton.alpha = 1;
+	        mouseHoverOverUIButton.play();
+	        hoveroverp = true;
+	    }
+	    else if (!playButton.input.pointerOver() && hoveroverp){
+	    	hoveroverp = false;
+	        playButton.alpha = 0.5;
+	    }
+
+	    if (helpButton.input.pointerOver() && !hoveroverh){
+	        helpButton.alpha = 1;
+	        mouseHoverOverUIButton.play();
+	        hoveroverh = true;
+	    }
+	    else if (!helpButton.input.pointerOver() && hoveroverh){
+	    	hoveroverh = false;
+	        helpButton.alpha = 0.5;
+	    }
 	},
 	startGame: function(){
+		accept.play();
 		game.state.start('Gameplay');
 	},
 	helpScreen: function(){
+		accept.play();
 		game.state.start('Help');
 	},
 	gofull: function() {
@@ -132,9 +197,22 @@ Help.prototype = {
 	create: function() {
 		game.add.sprite(0, 0, 'help');
 		//make exit button
-		var helpButton = game.add.button(875, 78, 'exit', this.return);
+		helpButton = game.add.button(875, 78, 'exit', this.return);
+		hoveroverH = false;
+	},
+	update: function(){
+		if (helpButton.input.pointerOver() && !hoveroverH){
+	        helpButton.alpha = 1;
+	        mouseHoverOverUIButton.play();
+	        hoveroverH = true;
+	    }
+	    else if (!helpButton.input.pointerOver() && hoveroverH){
+	    	hoveroverH = false;
+	        helpButton.alpha = 0.5;
+	    }
 	},
 	return: function(){
+		accept.play();
 		game.state.start('MainMenu');
 	}
 }
@@ -186,18 +264,21 @@ Gameplay.prototype = {
 		homebase = new Home(game, 'home');
 		game.add.existing(homebase);
 
-			music = game.add.audio('music');
-        music.loop = true;
+		music.stop();
     	music.play();
 
     	emitter = game.add.emitter(0, 0, 100);
     	emitter.makeParticles('enemyparticle');
 
+    	activeTurret = 0;
+    	difficulty = 0;
+    	activePU = 0;
+
     	start = true;
     	this.starttimer = 301;
 		
 		game.time.events.loop(8000, spawnEnemies, this);
-		game.time.events.loop(10000, spawnPowerUps, this);
+		game.time.events.loop(3000, spawnPowerUps, this);
 	},
 	update: function() {
 		if(this.starttimer >= -140){
@@ -268,14 +349,41 @@ GameOver.prototype = {
 	create: function(){
 		game.add.sprite(0,0, 'gameOver');
 		//add buttons
-		var replayButton = game.add.button(45, 300, 'replay', this.startGame);
-        var menuButton = game.add.button(45, 420, 'return', this.toMenu);
+		replayButton = game.add.button(45, 300, 'replay', this.startGame);
+        menuButton = game.add.button(45, 420, 'return', this.toMenu);
+        hoveroverR = false;
+        hoveroverM = false;
+	},
+	update: function(){
+		if (replayButton.input.pointerOver() && !hoveroverR){
+	        replayButton.alpha = 1;
+	        mouseHoverOverUIButton.play();
+	        hoveroverR = true;
+	    }
+	    else if (!replayButton.input.pointerOver() && hoveroverR){
+	    	hoveroverR = false;
+	        replayButton.alpha = 0.5;
+	    }
+
+	    if (menuButton.input.pointerOver() && !hoveroverM){
+	        menuButton.alpha = 1;
+	        mouseHoverOverUIButton.play();
+	        hoveroverM = true;
+	    }
+	    else if (!menuButton.input.pointerOver() && hoveroverM){
+	    	hoveroverM = false;
+	        menuButton.alpha = 0.5;
+	    }
 	},
 	startGame: function(){
+		accept.play();
 		game.state.start('Gameplay');
+		music.stop();
 	},
 	toMenu: function(){
+		accept.play();
 		game.state.start('MainMenu');
+		music.stop();
 	}
 }
 
@@ -335,6 +443,17 @@ function spawnPowerUps(){
 			powerups.add(PU);
 			game.add.existing(PU);
 			activePU++;
+		}
+
+		randomPUSound = Math.floor(Math.random() * 3);
+		if(randomPUSound == 0){
+			powerupSpawn1.play();
+		}
+		else if(randomPUSound == 1){
+			powerupSpawn2.play();
+		}
+		else{
+			powerupSpawn3.play();
 		}
 	}
 }

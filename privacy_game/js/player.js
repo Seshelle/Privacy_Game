@@ -138,6 +138,16 @@ function collect (body, bodyB, shapeA, shapeB, equation) {
 		this.currPowerup = body.sprite.id;
 		body.sprite.kill();
 		activePU--;
+		var randomSound = Math.floor(Math.random() * 3);
+		if(randomSound == 0){
+			powerupPickup1.play();
+		}
+		else if (randomSound == 1){
+			powerupPickup2.play();
+		}
+		else{
+			powerupPickup3.play();
+		}
 		this.powerupText.text = 'Power Up: ' + this.currPowerup;
 	}
 }
@@ -147,6 +157,7 @@ function usePU(powerup){
 		case "Blink":
 			player.body.x = game.input.activePointer.position.x;
 			player.body.y = game.input.activePointer.position.y;
+			powerupNormalSpeed.play();
 			player.currPowerup = "None";
 			break;
 		case "Turret":

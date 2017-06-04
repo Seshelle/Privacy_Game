@@ -15,6 +15,9 @@ Bomb.prototype = Object.create(Phaser.Sprite.prototype);
 Bomb.prototype.constructor = Bomb;
 
 Bomb.prototype.update = function () {
+	if(this.animations.currentAnim.frame % 5 == 0){
+		smartBombTick.play();
+	}
 	if (this.animations.currentAnim.frame == 24){
 		console.log('explode!');
 		smartBombExplode.play();

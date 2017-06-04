@@ -18,6 +18,8 @@ function Home(game, key, frame) {
 	this.animations.play('idle');
 
 	this.animations.add('damaged', [12, 0], 1, false);
+
+	this.deathtimer = 400;
 	
 	//this.body.static = true;
 	
@@ -32,7 +34,11 @@ Home.prototype.constructor = Home;
 Home.prototype.update = function() {
 	//lose condition
 	if(this.health <= 0){
-		game.state.start('GameOver');
+		//documents.animations.play('docexplode');
+		this.deathtimer--;
+		if(this.deathtimer == 0){
+			game.state.start('GameOver');
+		}
 	}
 
 	// this.scoretimer++;

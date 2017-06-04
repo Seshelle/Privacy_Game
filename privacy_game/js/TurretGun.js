@@ -29,6 +29,7 @@ TurretGun.prototype.update = function () {
 	    var bullet = new Bullet(game, this.x - xpos, this.y - ypos, 'bullet');
 		accelerateToPoint(bullet, 30000);
 	    bullets.add(bullet);
+	    turretFire.play();
 	    this.shoottimer = 10;
 	}
 };
