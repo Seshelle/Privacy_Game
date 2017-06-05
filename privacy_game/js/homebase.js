@@ -18,12 +18,6 @@ function Home(game, key, frame) {
 	this.animations.play('idle');
 
 	this.animations.add('damaged', [12, 0], 1, false);
-
-	this.deathtimer = 400;
-	
-	//this.body.static = true;
-	
-	//this.body.whatAmI = "home";
 }
 
 //add to constructor to Home prototype
@@ -35,29 +29,6 @@ Home.prototype.update = function() {
 	//lose condition
 	if(this.health <= 0){
 		//documents.animations.play('docexplode');
-		this.deathtimer--;
-		if(this.deathtimer == 0){
-			game.state.start('GameOver');
-		}
+		game.state.start('GameOver');
 	}
-
-	// this.scoretimer++;
-	// if(this.scoretimer % 100 == 0){
-	// 	this.score++;
-	// 	this.scoretimer = 0;
-	// 	this.scoreText.text = 'Score: ' + this.score;
-	// }
-
-	//enemy collision with home
-	//this.body.onBeginContact.add(homeHit, this);
 }
-
-//enemy collision with home
-/*function homeHit (body, bodyB, shapeA, shapeB, equation) {
-	console.log(body.whatAmI);
-	if (body.whatAmI == "enemy"){
-		body.sprite.kill();
-		this.health -= 10;
-		this.healthText.text = 'Health: ' + this.health;
-	}
-}*/
