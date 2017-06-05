@@ -221,8 +221,8 @@ var Gameplay = function() {};
 Gameplay.prototype = {
 	create: function(){
 		background = game.add.sprite(0, 0, 'bg');
-
-		toolbar = game.add.sprite(0, game.world.height - 44, 'toolbar');
+		game.world.setBounds(0, 0, 1024, 532);
+		toolbar = game.add.sprite(0, game.world.height, 'toolbar');
 		toolbar.animations.add('run', [0, 1], 1, true);
 		toolbar.animations.play('run');
 
@@ -246,7 +246,7 @@ Gameplay.prototype = {
 
 		this.readyText;
 
-		game.world.setBounds(0, 0, 1024, 532);
+
 
 		pl = this.game.add.group();
 		player = new Player(game, game.world.width/2 + 100, game.world.height/2);

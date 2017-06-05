@@ -63,3 +63,21 @@ canvas {
 #container {     
     top: 5%;     left: 100px;     position: absolute;
 }
+
+@font-face {
+      font-family: 'dimbo'; src: url('assets/font/Munro.ttf');
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: 'munro', sans-serif;
+    }
+    #game_div {
+      margin: auto;
+      background: #000;
+    }
+    #preload-font {
+      font-family: 'munro', sans-serif;
+      text-indent: -9999px;
+      font-size: 0;
+    }
