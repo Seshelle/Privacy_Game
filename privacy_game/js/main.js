@@ -72,6 +72,8 @@ Preloader.prototype = {
 		//UI
 		game.load.audio('mouseHoverOverUIButton', ['assets/audio/mouseHoverOverUIButton.mp3', 'assets/audio/mouseHoverOverUIButton.ogg']);
 		game.load.audio('accept', ['assets/audio/accept.mp3', 'assets/audio/accept.ogg']);
+		game.load.audio('gameOver', ['assets/audio/gameOver.mp3', 'assets/audio/gameOver.ogg']);
+		game.load.audio('highScore', ['assets/audio/highScore.mp3', 'assets/audio/highScore.ogg']);
 
 		game.load.bitmapFont('munro', 'assets/font/font.png', 'assets/font/font.fnt');
 
@@ -122,6 +124,8 @@ Preloader.prototype = {
 
     	mouseHoverOverUIButton = game.add.audio('mouseHoverOverUIButton');
     	accept = game.add.audio('accept');
+    	gameOverSound = game.add.audio('gameOver');
+    	highScoreSound = game.add.audio('highScore');
 
 		music = game.add.audio('music');
         music.loop = true;
@@ -358,8 +362,14 @@ GameOver.prototype = {
         menuButton = game.add.button(45, 420, 'return', this.toMenu);
         hoveroverR = false;
         hoveroverM = false;
+
         this.scoreText = game.add.text(425, game.world.height + 10, 'Score: ' + homebase.score, {font: 'munro', fontSize: '20px', fill: '#000'});
         this.highscoreText = game.add.text(425, game.world.height + 10, 'High Score: ' + highscore, {font: 'munro', fontSize: '20px', fill: '#000'});
+
+        if(homebase.score > highscore){
+        	highscore = homebase.score;
+        	game.time.events.add(3000, function(){highScoreSound.play(); this.highscoreText.text = 'High Score: ' + highscore;}, this);
+        }
 	},
 	update: function(){
 		if (replayButton.input.pointerOver() && !hoveroverR){

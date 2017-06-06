@@ -63,10 +63,9 @@ Enemy.prototype.update = function() {
 	if (distance < 40){
 		this.homeBase.health -= this.damage;
 		//this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
-		this.homeBase.animations.play('damaged');
-		//if(this.homeBase.animations.currentAnim.frame == 0){
-		//	this.homeBase.animations.play('idle');
-		//}
+		this.homeBase.frame = 12;
+		game.add.tween(this.homeBase).to( { frame: (this.homeBase.health / 10) }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
+		
 		aboutToLose.play();
 		game.camera.shake(0.005, 900);
 		this.kill();
@@ -77,7 +76,7 @@ Enemy.prototype.update = function() {
 function hitWall (body, bodyB, shapeA, shapeB, equation) {
 	if(body == null){
 		homebase.score++;
-	 	homebase.scoreText.text = 'Score: ' + homebase.score;
+	 	homebase.scoreText.text = homebase.score;
 		this.body.sprite.kill();
 		particleBurst(this.body);
 		this.destroy();

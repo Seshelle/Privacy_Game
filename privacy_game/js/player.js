@@ -16,7 +16,7 @@ var Player = function (game, x, y, frame) {
 
 	this.currPowerup = "None";
 
-	this.powerupText = game.add.text(700, game.world.height + 10, 'Power Up: None', {fontSize: '20px', fill: '#000'});
+	this.powerupText = game.add.text(745, game.world.height + 11, this.currPowerup, {fontSize: '20px', fill: '#000'});
 
 	this.fireKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	this.PUKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -128,7 +128,7 @@ function collect (body, bodyB, shapeA, shapeB, equation) {
 		else{
 			powerupPickup3.play();
 		}
-		this.powerupText.text = 'Power Up: ' + this.currPowerup;
+		this.powerupText.text = this.currPowerup;
 	}
 }
 
@@ -168,7 +168,7 @@ function usePU(powerup){
 		default:
 			console.log("no powerup");
 	}
-	player.powerupText.text = 'Power Up: ' + player.currPowerup;
+	player.powerupText.text = player.currPowerup;
 }
 
 function teleport(){
@@ -178,26 +178,28 @@ function teleport(){
 }
 
 function playerHit(body, bodyB, shapeA, shapeB, equation){
-	if(body.whatAmI != null && body.whatAmI == 'enemy'){
-		var rSound = Math.floor(Math.random() * 5);
-		switch(rSound){
-			case 0:
-				playerHitEnemy.play();
-				break;
-			case 1:
-				playerHitEnemy2.play();
-				break;
-			case 2:
-				playerHitEnemy3.play();
-				break;
-			case 3:
-				playerHitEnemy4.play();
-				break;
-			case 4:
-				playerHitEnemy5.play();
-				break;
-			default:
-				break;
+	if (body != null){
+		if(body.whatAmI == 'enemy'){
+			var rSound = Math.floor(Math.random() * 5);
+			switch(rSound){
+				case 0:
+					playerHitEnemy.play();
+					break;
+				case 1:
+					playerHitEnemy2.play();
+					break;
+				case 2:
+					playerHitEnemy3.play();
+					break;
+				case 3:
+					playerHitEnemy4.play();
+					break;
+				case 4:
+					playerHitEnemy5.play();
+					break;
+				default:
+					break;
+			}
 		}
 	}
 }

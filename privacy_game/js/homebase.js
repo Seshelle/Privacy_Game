@@ -7,20 +7,19 @@ function Home(game, key, frame) {
 	this.scoretimer = 0;
 
 
-	this.scoreText = game.add.text(425, game.world.height + 10, 'Score: 0', {font: 'munro', fontSize: '20px', fill: '#000'});
+	this.scoreText = game.add.text(207, game.world.height + 11, this.score, {font: 'munro', fontSize: '20px', fill: '#000'});
 	this.scoreText.fixedToCamera = true;
 
-	this.healthbar = game.add.sprite(550, game.world.height + 10, 'health')
+	this.healthbar = game.add.sprite(390, game.world.height + 1, 'health')
 	this.healthbar.frame = 0;
 
 	//this.healthText = game.add.text(550, game.world.height + 10, 'Health: 100', {font: 'munro', fontSize: '20px', fill: '#000'});
 
 	//this.healthText.fixedToCamera = true;
 
-	this.animations.add('idle', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
-	this.animations.play('idle');
-
-	this.animations.add('damaged', [12, 0], 1, false);
+	//this.animations.add('idle', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], 10, true);
+	//this.animations.play('idle');
+	//game.add.tween(this).to( { frame: 11 }, 80, Phaser.Easing.Linear.None, true, 0, -1, true);
 }
 
 //add to constructor to Home prototype
@@ -29,11 +28,12 @@ Home.prototype.constructor = Home;
 
 //override default update function
 Home.prototype.update = function() {
+	//this.frame = this.health / 10;
 	this.healthbar.frame = 10 - (this.health / 10);
 	//lose condition
 	if(this.health <= 0){
 		this.health = 0;
-		highscore = (this.score > highscore) ? this.score : highscore;
+		gameOverSound.play();
 		game.state.start('GameOver');
 	}
 }
