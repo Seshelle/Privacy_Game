@@ -5,6 +5,7 @@ function MiniExplosion(game, x, y) {
 	this.whatAmI = "Explosion";
 	this.anchor.set(0.5);
 	this.body.static = true;
+	this.body.data.shapes[0].sensor=true;
 
 	this.animations.add('Explosion', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 9, false);
 	this.animations.play('Explosion'); //play animation

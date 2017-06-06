@@ -40,7 +40,7 @@ RandomEnemy.prototype.update = function() {
 
 //this enemy moves in sudden bursts of speed
 function moveRandomly (enemy, home){
-	if (enemy){
+	if (enemy.body){
 		//Their velocity is set closer to zero when moving, that way their movement is more erratic
 		enemy.body.angularVelocity = 0;
 		enemy.body.velocity.x = enemy.body.velocity.x * 17 / 20;
