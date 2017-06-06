@@ -40,17 +40,19 @@ RandomEnemy.prototype.update = function() {
 
 //this enemy moves in sudden bursts of speed
 function moveRandomly (enemy, home){
-	//Their velocity is set closer to zero when moving, that way their movement is more erratic
-	enemy.body.angularVelocity = 0;
-	enemy.body.velocity.x = enemy.body.velocity.x * 8 / 10;
-	enemy.body.velocity.y = enemy.body.velocity.y * 8 / 10;
-	
-	//their angle of movement is chosen randomly within 90 degrees of home
-	var angle = Math.atan2(home.y - enemy.y, home.x - enemy.x);
-	angle += (Math.random() - 0.5) * 3.2;
-	enemy.body.rotation = angle + game.math.degToRad(90);
-	enemy.body.force.x = Math.cos(angle) * enemy.acceleration * enemy.body.mass;
-    enemy.body.force.y = Math.sin(angle) * enemy.acceleration * enemy.body.mass;
+	if (enemy){
+		//Their velocity is set closer to zero when moving, that way their movement is more erratic
+		enemy.body.angularVelocity = 0;
+		enemy.body.velocity.x = enemy.body.velocity.x * 8 / 10;
+		enemy.body.velocity.y = enemy.body.velocity.y * 8 / 10;
+		
+		//their angle of movement is chosen randomly within 90 degrees of home
+		var angle = Math.atan2(home.y - enemy.y, home.x - enemy.x);
+		angle += (Math.random() - 0.5) * 3.2;
+		enemy.body.rotation = angle + game.math.degToRad(90);
+		enemy.body.force.x = Math.cos(angle) * enemy.acceleration * enemy.body.mass;
+		enemy.body.force.y = Math.sin(angle) * enemy.acceleration * enemy.body.mass;
+	}
 }
 
 function increaseAcc(enemy){
