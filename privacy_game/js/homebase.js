@@ -33,6 +33,7 @@ Home.prototype.update = function() {
 	//lose condition
 	if(this.health <= 0){
 		this.health = 0;
+		highscore = (this.score > highscore) ? this.score : highscore;
 		game.state.start('GameOver');
 	}
 }

@@ -20,6 +20,8 @@ var Player = function (game, x, y, frame) {
 
 	this.fireKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	this.PUKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
+
+	this.body.onBeginContact.add(playerHit, this);
 };
 
 Player.prototype = Object.create(Phaser.Sprite.prototype);
@@ -173,4 +175,29 @@ function teleport(){
 	player.body.x = game.input.activePointer.position.x;
 	player.body.y = game.input.activePointer.position.y;
 	game.add.tween(player.scale).to( { x: 0.5, y: 0.5 }, 80, Phaser.Easing.Linear.None, true, 0, 0, false);
+}
+
+function playerHit(body, bodyB, shapeA, shapeB, equation){
+	if(body.whatAmI != null && body.whatAmI == 'enemy'){
+		var rSound = Math.floor(Math.random() * 5);
+		switch(rSound){
+			case 0:
+				playerHitEnemy.play();
+				break;
+			case 1:
+				playerHitEnemy2.play();
+				break;
+			case 2:
+				playerHitEnemy3.play();
+				break;
+			case 3:
+				playerHitEnemy4.play();
+				break;
+			case 4:
+				playerHitEnemy5.play();
+				break;
+			default:
+				break;
+		}
+	}
 }

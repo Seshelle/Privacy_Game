@@ -12,7 +12,7 @@ Preloader.prototype = {
 		game.load.spritesheet('fakePU', 'assets/img/enemydisguised.png', 28, 28);
 		game.load.spritesheet('randomEnemy', 'assets/img/enemy2.png', 30, 27);
 		game.load.spritesheet('home', 'assets/img/home.png', 83, 86);
-		game.load.image('turretbase', 'assets/img/turret.png');
+		game.load.spritesheet('turretbase', 'assets/img/turret.png', 50, 50);
 		game.load.image('turrettop', 'assets/img/turrettop.png');
 		game.load.spritesheet('files', 'assets/img/files.png', 67, 77);
 		game.load.spritesheet('documents', 'assets/img/documents.png', 67, 77);
@@ -23,7 +23,7 @@ Preloader.prototype = {
 		game.load.image('enemyparticle', 'assets/img/enemyParticle2.png');
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
-		game.load.spritesheet('health', 'assets/img/health.png', 202, 43);
+		game.load.spritesheet('health', 'assets/img/health.png', 200, 43);
 		game.load.audio('music', ['assets/audio/track.mp3', 'assets/audio/track.ogg']);
 		
 		//enemies sound
@@ -143,6 +143,7 @@ MainMenu.prototype = {
         helpButton = game.add.button(586.25, 355, 'helpButton', this.helpScreen);
         game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
     	music.play();
+        this.highscoreText = game.add.text(425, game.world.height + 10, 'High Score: ' + highscore, {font: 'munro', fontSize: '20px', fill: '#000'});
     	hoveroverp = false;
     	hoveroverh = false;
 	},
@@ -304,6 +305,7 @@ Gameplay.prototype = {
 		else{
 			if(this.starttimer == -1){
 				documents.animations.play('docexplode');
+				smartBombExplode.play();
 				game.camera.shake(0.01, 900);
 				var enemy = new Enemy(game, documents.x, documents.y, 'enemy', homebase);
 				game.add.existing(enemy);
@@ -311,6 +313,7 @@ Gameplay.prototype = {
 			}
 			else if(this.starttimer == -20){
 				files.animations.play('filesexplode');
+				smartBombExplode.play();
 				game.camera.shake(0.01, 900);
 				var enemy = new Enemy(game, files.x, files.y, 'enemy', homebase);
 				game.add.existing(enemy);
@@ -318,6 +321,7 @@ Gameplay.prototype = {
 			}
 			else if(this.starttimer == -40){
 				trash.animations.play('trashexplode');
+				smartBombExplode.play();
 				game.camera.shake(0.01, 900);
 				var enemy = new Enemy(game, trash.x, trash.y, 'enemy', homebase);
 				game.add.existing(enemy);
@@ -354,6 +358,8 @@ GameOver.prototype = {
         menuButton = game.add.button(45, 420, 'return', this.toMenu);
         hoveroverR = false;
         hoveroverM = false;
+        this.scoreText = game.add.text(425, game.world.height + 10, 'Score: ' + homebase.score, {font: 'munro', fontSize: '20px', fill: '#000'});
+        this.highscoreText = game.add.text(425, game.world.height + 10, 'High Score: ' + highscore, {font: 'munro', fontSize: '20px', fill: '#000'});
 	},
 	update: function(){
 		if (replayButton.input.pointerOver() && !hoveroverR){
@@ -485,6 +491,7 @@ var homebase;
 var powerups;
 var emitter;
 
+var highscore = 0;
 var difficulty = 0;
 
 var bulletMaterial;
