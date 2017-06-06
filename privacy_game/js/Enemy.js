@@ -62,7 +62,7 @@ Enemy.prototype.update = function() {
 	
 	if (distance < 40){
 		this.homeBase.health -= this.damage;
-		this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
+		//this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
 		this.homeBase.animations.play('damaged');
 		//if(this.homeBase.animations.currentAnim.frame == 0){
 		//	this.homeBase.animations.play('idle');

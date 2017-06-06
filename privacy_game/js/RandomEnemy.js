@@ -31,7 +31,7 @@ RandomEnemy.prototype.update = function() {
 	
 	if (distance < 40){
 		this.homeBase.health -= this.damage;
-		this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
+		//this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
 		game.time.events.remove(this.looper);
 		this.kill();
 		this.destroy();

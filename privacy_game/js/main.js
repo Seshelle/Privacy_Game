@@ -23,6 +23,7 @@ Preloader.prototype = {
 		game.load.image('enemyparticle', 'assets/img/enemyParticle2.png');
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
+		game.load.spritesheet('health', 'assets/img/health.png', 202, 43);
 		game.load.audio('music', ['assets/audio/track.mp3', 'assets/audio/track.ogg']);
 		
 		//enemies sound
@@ -63,7 +64,7 @@ Preloader.prototype = {
 
 		//slow down time
 		//game.load.audio('powerupSlowDown', ['assets/audio/powerupSlowDown.mp3', 'assets/audio/powerupSlowDown.ogg']);
-		game.load.audio('powerupNormalSpeed', ['assets/audio/powerupNormalSpeed.mp3', 'assets/audio/powerupNormalSpeed.ogg']);
+		game.load.audio('blink', ['assets/audio/blink.mp3', 'assets/audio/blink.ogg']);
 
 		//health
 		game.load.audio('powerupHeal', ['assets/audio/powerupHeal.mp3', 'assets/audio/powerupHeal.ogg']);
@@ -72,7 +73,7 @@ Preloader.prototype = {
 		game.load.audio('mouseHoverOverUIButton', ['assets/audio/mouseHoverOverUIButton.mp3', 'assets/audio/mouseHoverOverUIButton.ogg']);
 		game.load.audio('accept', ['assets/audio/accept.mp3', 'assets/audio/accept.ogg']);
 
-
+		game.load.bitmapFont('munro', 'assets/font/font.png', 'assets/font/font.fnt');
 
 		bulletMaterial = game.physics.p2.createMaterial('bulletMaterial');
 		enemyMaterial = game.physics.p2.createMaterial('enemyMaterial');
@@ -117,7 +118,7 @@ Preloader.prototype = {
 
     	powerupHeal = game.add.audio('powerupHeal');
 
-    	powerupNormalSpeed = game.add.audio('powerupNormalSpeed');
+    	blink = game.add.audio('blink');
 
     	mouseHoverOverUIButton = game.add.audio('mouseHoverOverUIButton');
     	accept = game.add.audio('accept');

@@ -133,9 +133,9 @@ function collect (body, bodyB, shapeA, shapeB, equation) {
 function usePU(powerup){
 	switch (powerup){
 		case "Blink":
-			player.body.x = game.input.activePointer.position.x;
-			player.body.y = game.input.activePointer.position.y;
-			powerupNormalSpeed.play();
+			game.add.tween(player.scale).to( { x: 0, y: 0 }, 80, Phaser.Easing.Linear.None, true, 0, 0, false);
+			game.time.events.add(80, teleport, this);
+			blink.play();
 			player.currPowerup = "None";
 			break;
 		case "Turret":
@@ -160,11 +160,17 @@ function usePU(powerup){
 		case "Patch":
 			powerupHeal.play();
 			homebase.health = homebase.health + 30 > 100 ? 100 : homebase.health + 30;
-			homebase.healthText.text = 'Health: ' + homebase.health;
+			//homebase.healthText.text = 'Health: ' + homebase.health;
 			player.currPowerup = "None";
 			break;
 		default:
 			console.log("no powerup");
 	}
 	player.powerupText.text = 'Power Up: ' + player.currPowerup;
+}
+
+function teleport(){
+	player.body.x = game.input.activePointer.position.x;
+	player.body.y = game.input.activePointer.position.y;
+	game.add.tween(player.scale).to( { x: 0.5, y: 0.5 }, 80, Phaser.Easing.Linear.None, true, 0, 0, false);
 }
