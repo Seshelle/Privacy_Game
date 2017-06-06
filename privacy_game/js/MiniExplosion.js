@@ -4,6 +4,7 @@ function MiniExplosion(game, x, y) {
 	game.physics.p2.enable(this, false);
 	this.whatAmI = "Explosion";
 	this.anchor.set(0.5);
+	this.body.static = true;
 
 	this.animations.add('Explosion', [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], 9, false);
 	this.animations.play('Explosion'); //play animation

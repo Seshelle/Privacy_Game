@@ -175,6 +175,8 @@ function teleport(){
 	player.body.x = game.input.activePointer.position.x;
 	player.body.y = game.input.activePointer.position.y;
 	game.add.tween(player.scale).to( { x: 0.5, y: 0.5 }, 80, Phaser.Easing.Linear.None, true, 0, 0, false);
+	var explode = new MiniExplosion(game, player.x, player.y, 'Explosion');
+	game.add.existing(explode);
 }
 
 function playerHit(body, bodyB, shapeA, shapeB, equation){

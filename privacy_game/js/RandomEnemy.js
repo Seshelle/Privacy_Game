@@ -43,8 +43,8 @@ function moveRandomly (enemy, home){
 	if (enemy){
 		//Their velocity is set closer to zero when moving, that way their movement is more erratic
 		enemy.body.angularVelocity = 0;
-		enemy.body.velocity.x = enemy.body.velocity.x * 8 / 10;
-		enemy.body.velocity.y = enemy.body.velocity.y * 8 / 10;
+		enemy.body.velocity.x = enemy.body.velocity.x * 17 / 20;
+		enemy.body.velocity.y = enemy.body.velocity.y * 17 / 20;
 		
 		//their angle of movement is chosen randomly within 90 degrees of home
 		var angle = Math.atan2(home.y - enemy.y, home.x - enemy.x);
