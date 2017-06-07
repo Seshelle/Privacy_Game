@@ -64,10 +64,8 @@ Enemy.prototype.update = function() {
 		if (!homeInvulnerable){
 			this.homeBase.health -= this.damage;
 			this.homeBase.frame = 12;
-			//this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
-			this.homeBase.animations.play('damaged');
-			game.add.tween(this.homeBase).to( { frame: (this.homeBase.health / 10) }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
-			
+			this.homeBase.frame = 12;
+			game.time.events.add(1000, function(){this.homeBase.frame = this.homeBase.health / 10;}, this);
 			aboutToLose.play("", 0, 0.5);
 			game.camera.shake(0.005, 900);
 			this.kill();

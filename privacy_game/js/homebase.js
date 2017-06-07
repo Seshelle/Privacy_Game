@@ -7,10 +7,10 @@ function Home(game, key, frame) {
 	this.scoretimer = 0;
 
 
-	this.scoreText = game.add.text(207, game.world.height + 11, this.score, {font: 'munro', fontSize: '20px', fill: '#000'});
+	this.scoreText = game.add.bitmapText(207, game.world.height + 9, 'munro', this.score, 25);
 	this.scoreText.fixedToCamera = true;
 
-	this.healthbar = game.add.sprite(390, game.world.height + 1, 'health')
+	this.healthbar = game.add.sprite(388, game.world.height + 1, 'health')
 	this.healthbar.frame = 0;
 
 	//this.healthText = game.add.text(550, game.world.height + 10, 'Health: 100', {font: 'munro', fontSize: '20px', fill: '#000'});

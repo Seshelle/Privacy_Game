@@ -16,7 +16,7 @@ var Player = function (game, x, y, frame) {
 
 	this.currPowerup = "None";
 
-	this.powerupText = game.add.text(745, game.world.height + 11, this.currPowerup, {fontSize: '20px', fill: '#000'});
+	this.powerupText = game.add.bitmapText(745, game.world.height + 9, 'munro', this.currPowerup, 25);
 
 	this.fireKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 	this.PUKey = game.input.keyboard.addKey(Phaser.Keyboard.W);
