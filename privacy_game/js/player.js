@@ -88,6 +88,7 @@ Player.prototype.fire = function(){
 		var ypos = Math.sin(angleRadians) * 15;
 
         console.log('fired');
+        turretFire.play();
         var bullet = new Bullet(game, this.x - xpos, this.y - ypos, 'bullet');
 		accelerateToPoint(bullet, 30000);
         bullets.add(bullet);
