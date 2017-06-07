@@ -62,10 +62,8 @@ Enemy.prototype.update = function() {
 	
 	if (distance < 40){
 		this.homeBase.health -= this.damage;
-		//this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
 		this.homeBase.frame = 12;
-		game.add.tween(this.homeBase).to( { frame: (this.homeBase.health / 10) }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
-		
+		game.time.events.add(1000, function(){this.homeBase.frame = this.homeBase.health / 10;}, this);
 		aboutToLose.play();
 		game.camera.shake(0.005, 900);
 		this.kill();

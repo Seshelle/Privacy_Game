@@ -8,6 +8,7 @@ var Bomb = function(game, x, y) {
 	this.animations.add('placebomb',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20, 21, 22, 23, 24], 5, false);
 	this.animations.play('placebomb'); //play animation
 	console.log('bomb created');
+	game.add.tween(this.scale).to( { x: 1.7, y: 1.7 }, 5000, Phaser.Easing.Exponential.In, true, 0, 0, false);
 };
 
 Bomb.prototype = Object.create(Phaser.Sprite.prototype);

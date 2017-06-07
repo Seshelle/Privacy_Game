@@ -11,7 +11,7 @@ Preloader.prototype = {
 		game.load.spritesheet('speedyEnemy', 'assets/img/enemy1small.png', 19, 12);
 		game.load.spritesheet('fakePU', 'assets/img/enemydisguised.png', 28, 28);
 		game.load.spritesheet('randomEnemy', 'assets/img/enemy2.png', 30, 27);
-		game.load.spritesheet('home', 'assets/img/home.png', 83, 86);
+		game.load.spritesheet('home', 'assets/img/home.png', 69.69, 86);
 		game.load.spritesheet('turretbase', 'assets/img/turret.png', 50, 50);
 		game.load.image('turrettop', 'assets/img/turrettop.png');
 		game.load.spritesheet('files', 'assets/img/files.png', 67, 77);
@@ -23,7 +23,7 @@ Preloader.prototype = {
 		game.load.image('enemyparticle', 'assets/img/enemyParticle2.png');
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
-		game.load.spritesheet('health', 'assets/img/health.png', 200, 43);
+		game.load.spritesheet('health', 'assets/img/health.png', 250, 43);
 		game.load.audio('music', ['assets/audio/track.mp3', 'assets/audio/track.ogg']);
 		
 		//enemies sound
@@ -144,12 +144,16 @@ MainMenu.prototype = {
         game.add.sprite(0, 0, 'menu');
         //add buttons 
         playButton = game.add.button(415.25, 355, 'playButton', this.startGame);
+        playButton.alpha = 0.5;
         helpButton = game.add.button(586.25, 355, 'helpButton', this.helpScreen);
+        helpButton.alpha = 0.5;
         game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
     	music.play();
-        this.highscoreText = game.add.text(425, game.world.height + 10, 'High Score: ' + highscore, {font: 'munro', fontSize: '20px', fill: '#000'});
+        this.highscoreText = game.add.bitmapText(80, 50, 'munro', highscore, 30);
+        this.highscoreText.anchor.set(0.5, 0);
     	hoveroverp = false;
     	hoveroverh = false;
+	    this.FKey = game.input.keyboard.addKey(Phaser.Keyboard.F);
 	},
 	update: function(){
 		if (playButton.input.pointerOver() && !hoveroverp){
@@ -171,6 +175,11 @@ MainMenu.prototype = {
 	    	hoveroverh = false;
 	        helpButton.alpha = 0.5;
 	    }
+
+	    if(this.FKey.justPressed()){
+			this.gofull();
+		}
+		this.FKey.onUp.add(this.gofull, this);
 	},
 	startGame: function(){
 		accept.play();
@@ -204,6 +213,7 @@ Help.prototype = {
 		game.add.sprite(0, 0, 'help');
 		//make exit button
 		helpButton = game.add.button(875, 78, 'exit', this.return);
+		helpButton.alpha = 0.5;
 		hoveroverH = false;
 	},
 	update: function(){
@@ -293,7 +303,8 @@ Gameplay.prototype = {
 		if(start){
 			homebase.score = 0;
 			if(this.starttimer == 300){
-				this.readyText = game.add.text(game.world.width/2, game.world.height/2, '3', {fontSize: '48px', fill: '#000'});
+				this.readyText = game.add.bitmapText(game.world.width/2, game.world.height/2, 'munro', '3', 128);
+				this.readyText.anchor.set(0.5, 0.5);
 			}
 			else if(this.starttimer == 200){
 				this.readyText.text = '2';
@@ -332,7 +343,7 @@ Gameplay.prototype = {
 				enemies.add(enemy);
 			}
 			else if (this.starttimer == -140){
-				this.readyText.text = '';
+				game.add.tween(this.readyText).to( { alpha: 0 }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
 				documents.destroy();
 				trash.destroy();
 				files.destroy();
@@ -359,16 +370,26 @@ GameOver.prototype = {
 		game.add.sprite(0,0, 'gameOver');
 		//add buttons
 		replayButton = game.add.button(45, 300, 'replay', this.startGame);
+		replayButton.alpha = 0.5;
         menuButton = game.add.button(45, 420, 'return', this.toMenu);
+        menuButton.alpha = 0.5;
         hoveroverR = false;
         hoveroverM = false;
 
-        this.scoreText = game.add.text(425, game.world.height + 10, 'Score: ' + homebase.score, {font: 'munro', fontSize: '20px', fill: '#000'});
-        this.highscoreText = game.add.text(425, game.world.height + 10, 'High Score: ' + highscore, {font: 'munro', fontSize: '20px', fill: '#000'});
+        this.scoreText = game.add.bitmapText(890, game.world.height - 90, 'munro', homebase.score, 30);
+        this.scoreText.anchor.set(0.5, 0);
+        this.highscoreText = game.add.bitmapText(890, game.world.height - 25, 'munro', highscore, 30);
+        this.highscoreText.anchor.set(0.5, 0);
 
         if(homebase.score > highscore){
         	highscore = homebase.score;
-        	game.time.events.add(3000, function(){highScoreSound.play(); this.highscoreText.text = 'High Score: ' + highscore;}, this);
+        	game.time.events.add(3000, function(){
+        		highScoreSound.play();
+        		this.highscoreText.text = highscore;
+        		this.newhighscoreText = game.add.bitmapText(880, game.world.height - 140, 'munro', 'New High Score!', 20);
+        		this.newhighscoreText.anchor.set(0.5, 0.5);
+        		game.add.tween(this.newhighscoreText.scale).to( { x: 1.5, y: 1.5 }, 500, Phaser.Easing.Linear.None, true, 0, -1, true);
+        	}, this);
         }
 	},
 	update: function(){
