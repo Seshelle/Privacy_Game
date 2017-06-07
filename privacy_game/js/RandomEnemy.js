@@ -30,14 +30,19 @@ RandomEnemy.prototype.update = function() {
     var distance = Math.sqrt(dx * dx + dy * dy);
 	
 	if (distance < 40){
-		this.homeBase.health -= this.damage;
-		this.homeBase.frame = 12;
-		game.time.events.add(1000, function(){this.homeBase.frame = this.homeBase.health / 10;}, this);
-		aboutToLose.play();
-		game.camera.shake(0.005, 900);
-		game.time.events.remove(this.looper);
-		this.kill();
-		this.destroy();
+		if (!homeInvulnerable){
+			this.homeBase.health -= this.damage;
+			this.homeBase.frame = 12;
+			game.time.events.add(1000, function(){this.homeBase.frame = this.homeBase.health / 10;}, this);
+			aboutToLose.play("", 0, 0.5);
+			game.time.events.remove(this.looper);
+			game.camera.shake(0.005, 900);
+			this.kill();
+			this.destroy();
+		}
+		else{
+			accelerateToObject(this, this.homeBase, -10000)
+		}
 	}
 }
 

@@ -15,6 +15,6 @@ SpeedyEnemy.prototype = Object.create(Enemy.prototype);
 SpeedyEnemy.prototype.constructor = SpeedyEnemy;
 
 function zoom(enemy){
-	enemy.maxSpeed = 1;
+	enemy.maxSpeed = 2;
 	enemy.acceleration = 100;
 }

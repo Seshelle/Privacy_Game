@@ -34,6 +34,6 @@ function explode (body, bodyB, shapeA, shapeB, equation) {
 	if (body != null && body.whatAmI == "enemy"){
 		body.sprite.destroy();
 		homebase.score++;
-	 	homebase.scoreText.text = 'Score: ' + homebase.score;
+	 	homebase.scoreText.text = homebase.score;
 	}
 }

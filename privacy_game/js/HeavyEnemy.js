@@ -3,7 +3,7 @@ function HeavyEnemy(game, x, y, key, home) {
 	
 	//override enemy statistics
 	this.body.mass = 20;
-	this.maxSpeed = 0.1;
+	this.maxSpeed = 0.2;
 	this.damage = 50;
 }
 

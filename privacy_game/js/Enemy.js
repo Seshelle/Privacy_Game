@@ -19,7 +19,7 @@ function Enemy(game, x, y, key, home) {
 	//these are base enemy statistics
 	this.body.mass = 1;
 	this.acceleration = 10;
-	this.maxSpeed = 0.2;
+	this.maxSpeed = 0.25;
 	this.damage = 20;
 	
 	//set the damping high at first so they don't go flying when spawned inside each other
@@ -63,7 +63,6 @@ Enemy.prototype.update = function() {
 	if (distance < 40){
 		if (!homeInvulnerable){
 			this.homeBase.health -= this.damage;
-			this.homeBase.frame = 12;
 			this.homeBase.frame = 12;
 			game.time.events.add(1000, function(){this.homeBase.frame = this.homeBase.health / 10;}, this);
 			aboutToLose.play("", 0, 0.5);

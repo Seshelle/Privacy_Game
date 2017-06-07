@@ -11,7 +11,7 @@ Preloader.prototype = {
 		game.load.spritesheet('speedyEnemy', 'assets/img/enemy1small.png', 19, 12);
 		game.load.spritesheet('fakePU', 'assets/img/enemydisguised.png', 28, 28);
 		game.load.spritesheet('randomEnemy', 'assets/img/enemy2.png', 30, 27);
-		game.load.spritesheet('home', 'assets/img/home.png', 69.69, 86);
+		game.load.spritesheet('home', 'assets/img/home.png', 71, 86);
 		game.load.spritesheet('turretbase', 'assets/img/turret.png', 50, 50);
 		game.load.image('turrettop', 'assets/img/turrettop.png');
 		game.load.spritesheet('files', 'assets/img/files.png', 67, 77);
@@ -295,7 +295,7 @@ Gameplay.prototype = {
     	this.starttimer = 301;
 		
 		game.time.events.loop(8000, spawnEnemies, this);
-		game.time.events.loop(15000, spawnPowerUps, this);
+		game.time.events.loop(20000, spawnPowerUps, this);
 	},
 	update: function() {
 		if(this.starttimer >= -140){
@@ -430,7 +430,7 @@ function spawnEnemies(){
 	console.log("spawn enemies");
 	
 	//spawns random amount of enemies depending on difficulty at random location
-	var numEnemies = Math.random() * (difficulty/10) + 3;
+	var numEnemies = Math.random() * (difficulty/7) + 3;
 	difficulty++;
 	
 	for(let x = 0; x < numEnemies; x++){
@@ -473,7 +473,7 @@ function spawnPowerUps(){
 		//the likelihood of a powerup being fake increases with difficulty
 		var fakeChance = difficulty/300;
 		if (fakeChance > 0.3) {
-			fakeChance = 0.3;
+			 fakeChance = 0.3;
 		}
 		if (Math.random() <= fakeChance){
 			var enemy = new FakePowerup(game, randX, randY, 'fakePU', homebase);
