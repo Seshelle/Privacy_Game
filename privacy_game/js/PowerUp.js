@@ -7,7 +7,7 @@ function PowerUp(game, x, y, key, home) {
 	this.PUs = ["Blink", "Turret", "Bomb", "Patch"];
 	var choose = Math.floor(Math.random() * this.PUs.length);
 
-	this.id = this.PUs[3];
+	this.id = this.PUs[choose];
 	
 	this.body.damping = 0.5;
 

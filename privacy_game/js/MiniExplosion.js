@@ -20,6 +20,5 @@ MiniExplosion.prototype.update = function () {
 		console.log("destroy explosion");
 		this.kill();
 		this.destroy();
-		game.camera.shake(0.005, 200);
 	}
 };

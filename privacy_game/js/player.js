@@ -161,7 +161,7 @@ function usePU(powerup){
 			break;
 		case "Patch":
 			powerupHeal.play("", 0, 0.3);
-			homebase.health = homebase.health + 30 > 100 ? 100 : homebase.health + 30;
+			homebase.health = homebase.health + 20 > 100 ? 100 : homebase.health + 20;
 			var heart = game.add.sprite(homebase.x, homebase.y, 'heart');
 			heart.anchor.set(0.5);
 			game.add.existing(heart);

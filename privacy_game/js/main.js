@@ -281,7 +281,7 @@ Gameplay.prototype = {
     	this.starttimer = 301;
 		
 		game.time.events.loop(8000, spawnEnemies, this);
-		game.time.events.loop(3000, spawnPowerUps, this);
+		game.time.events.loop(15000, spawnPowerUps, this);
 	},
 	update: function() {
 		if(this.starttimer >= -140){
@@ -399,7 +399,7 @@ function spawnEnemies(){
 	console.log("spawn enemies");
 	
 	//spawns random amount of enemies depending on difficulty at random location
-	var numEnemies = Math.random() * (difficulty/10) + 4;
+	var numEnemies = Math.random() * (difficulty/10) + 3;
 	difficulty++;
 	
 	for(let x = 0; x < numEnemies; x++){
@@ -415,12 +415,15 @@ function spawnEnemies(){
 		var whatSpawns = Math.random() * 100;
 		if (whatSpawns <= 10){
 			var enemy = new HeavyEnemy(game, randX, randY, 'bigEnemy', homebase);
+			x++;
 		}
 		else if(whatSpawns <= 20){
 			var enemy = new SpeedyEnemy(game, randX, randY, 'speedyEnemy', homebase);
+			x++;
 		}
 		else if(whatSpawns <= 30){
 			var enemy = new RandomEnemy(game, randX, randY, 'randomEnemy', homebase);
+			x++;
 		}
 		else{
 			var enemy = new Enemy(game, randX, randY, 'enemy', homebase);
