@@ -20,6 +20,7 @@ Preloader.prototype = {
 		game.load.spritesheet('toolbar', 'assets/img/toolbar.png', 1026, 44);
 		game.load.spritesheet('bomb', 'assets/img/smartbomb.png', 28, 38);
 		game.load.spritesheet('Explosion', 'assets/img/smartBombExplosion.png', 94, 94);
+		game.load.spritesheet('heart', 'assets/img/patch.png', 45, 39);
 		game.load.image('enemyparticle', 'assets/img/enemyParticle2.png');
 		game.load.spritesheet('bullet', 'assets/img/bullet.png', 14, 14);
 		game.load.spritesheet('powerup', 'assets/img/powerup.png', 28, 28);
@@ -154,7 +155,7 @@ MainMenu.prototype = {
 	update: function(){
 		if (playButton.input.pointerOver() && !hoveroverp){
 	        playButton.alpha = 1;
-	        mouseHoverOverUIButton.play();
+	        mouseHoverOverUIButton.play("", 0, 0.3);
 	        hoveroverp = true;
 	    }
 	    else if (!playButton.input.pointerOver() && hoveroverp){
@@ -164,7 +165,7 @@ MainMenu.prototype = {
 
 	    if (helpButton.input.pointerOver() && !hoveroverh){
 	        helpButton.alpha = 1;
-	        mouseHoverOverUIButton.play();
+	        mouseHoverOverUIButton.play("", 0, 0.3);
 	        hoveroverh = true;
 	    }
 	    else if (!helpButton.input.pointerOver() && hoveroverh){
@@ -173,11 +174,11 @@ MainMenu.prototype = {
 	    }
 	},
 	startGame: function(){
-		accept.play();
+		accept.play("", 0, 0.3);
 		game.state.start('Gameplay');
 	},
 	helpScreen: function(){
-		accept.play();
+		accept.play("", 0, 0.3);
 		game.state.start('Help');
 	},
 	gofull: function() {
@@ -209,7 +210,7 @@ Help.prototype = {
 	update: function(){
 		if (helpButton.input.pointerOver() && !hoveroverH){
 	        helpButton.alpha = 1;
-	        mouseHoverOverUIButton.play();
+	        mouseHoverOverUIButton.play("", 0, 0.3);
 	        hoveroverH = true;
 	    }
 	    else if (!helpButton.input.pointerOver() && hoveroverH){
@@ -218,7 +219,7 @@ Help.prototype = {
 	    }
 	},
 	return: function(){
-		accept.play();
+		accept.play("", 0, 0.3);
 		game.state.start('MainMenu');
 	}
 }
@@ -284,7 +285,7 @@ Gameplay.prototype = {
     	this.starttimer = 301;
 		
 		game.time.events.loop(8000, spawnEnemies, this);
-		game.time.events.loop(3000, spawnPowerUps, this);
+		game.time.events.loop(15000, spawnPowerUps, this);
 	},
 	update: function() {
 		if(this.starttimer >= -140){
@@ -374,7 +375,7 @@ GameOver.prototype = {
 	update: function(){
 		if (replayButton.input.pointerOver() && !hoveroverR){
 	        replayButton.alpha = 1;
-	        mouseHoverOverUIButton.play();
+	        mouseHoverOverUIButton.play("", 0, 0.3);
 	        hoveroverR = true;
 	    }
 	    else if (!replayButton.input.pointerOver() && hoveroverR){
@@ -384,7 +385,7 @@ GameOver.prototype = {
 
 	    if (menuButton.input.pointerOver() && !hoveroverM){
 	        menuButton.alpha = 1;
-	        mouseHoverOverUIButton.play();
+	        mouseHoverOverUIButton.play("", 0, 0.3);
 	        hoveroverM = true;
 	    }
 	    else if (!menuButton.input.pointerOver() && hoveroverM){
@@ -393,12 +394,12 @@ GameOver.prototype = {
 	    }
 	},
 	startGame: function(){
-		accept.play();
+		accept.play("", 0, 0.3);
 		game.state.start('Gameplay');
 		music.stop();
 	},
 	toMenu: function(){
-		accept.play();
+		accept.play("", 0, 0.3);
 		game.state.start('MainMenu');
 		music.stop();
 	}
@@ -408,7 +409,7 @@ function spawnEnemies(){
 	console.log("spawn enemies");
 	
 	//spawns random amount of enemies depending on difficulty at random location
-	var numEnemies = Math.random() * (difficulty/10) + 4;
+	var numEnemies = Math.random() * (difficulty/10) + 3;
 	difficulty++;
 	
 	for(let x = 0; x < numEnemies; x++){
@@ -424,12 +425,15 @@ function spawnEnemies(){
 		var whatSpawns = Math.random() * 100;
 		if (whatSpawns <= 10){
 			var enemy = new HeavyEnemy(game, randX, randY, 'bigEnemy', homebase);
+			x++;
 		}
 		else if(whatSpawns <= 20){
 			var enemy = new SpeedyEnemy(game, randX, randY, 'speedyEnemy', homebase);
+			x++;
 		}
 		else if(whatSpawns <= 30){
 			var enemy = new RandomEnemy(game, randX, randY, 'randomEnemy', homebase);
+			x++;
 		}
 		else{
 			var enemy = new Enemy(game, randX, randY, 'enemy', homebase);
@@ -464,13 +468,13 @@ function spawnPowerUps(){
 
 		randomPUSound = Math.floor(Math.random() * 3);
 		if(randomPUSound == 0){
-			powerupSpawn1.play();
+			powerupSpawn1.play("", 0, 0.3);
 		}
 		else if(randomPUSound == 1){
-			powerupSpawn2.play();
+			powerupSpawn2.play("", 0, 0.3);
 		}
 		else{
-			powerupSpawn3.play();
+			powerupSpawn3.play("", 0, 0.3);
 		}
 	}
 }
@@ -503,6 +507,7 @@ var emitter;
 
 var highscore = 0;
 var difficulty = 0;
+var homeInvulnerable = false;
 
 var bulletMaterial;
 var enemyMaterial;

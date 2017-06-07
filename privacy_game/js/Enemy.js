@@ -61,15 +61,21 @@ Enemy.prototype.update = function() {
 	this.previousDistance = distance;
 	
 	if (distance < 40){
-		this.homeBase.health -= this.damage;
-		//this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
-		this.homeBase.frame = 12;
-		game.add.tween(this.homeBase).to( { frame: (this.homeBase.health / 10) }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
-		
-		aboutToLose.play();
-		game.camera.shake(0.005, 900);
-		this.kill();
-		this.destroy();
+		if (!homeInvulnerable){
+			this.homeBase.health -= this.damage;
+			this.homeBase.frame = 12;
+			//this.homeBase.healthText.text = 'Health: ' + this.homeBase.health;
+			this.homeBase.animations.play('damaged');
+			game.add.tween(this.homeBase).to( { frame: (this.homeBase.health / 10) }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
+			
+			aboutToLose.play("", 0, 0.5);
+			game.camera.shake(0.005, 900);
+			this.kill();
+			this.destroy();
+		}
+		else{
+			accelerateToObject(this, this.homeBase, -10000)
+		}
 	}
 }
 
@@ -82,9 +88,9 @@ function hitWall (body, bodyB, shapeA, shapeB, equation) {
 		this.destroy();
 		deathSound = Math.floor(Math.random() * 2);
 		if(deathSound)
-			enemyDeath.play();
+			enemyDeath.play("", 0, 0.5);
 		else
-			enemyDeath2.play();
+			enemyDeath2.play("", 0, 0.5);
 	}
 }
 

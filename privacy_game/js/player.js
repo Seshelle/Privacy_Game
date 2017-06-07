@@ -120,13 +120,13 @@ function collect (body, bodyB, shapeA, shapeB, equation) {
 		activePU--;
 		var randomSound = Math.floor(Math.random() * 3);
 		if(randomSound == 0){
-			powerupPickup1.play();
+			powerupPickup1.play("", 0, 0.3);
 		}
 		else if (randomSound == 1){
-			powerupPickup2.play();
+			powerupPickup2.play("", 0, 0.3);
 		}
 		else{
-			powerupPickup3.play();
+			powerupPickup3.play("", 0, 0.3);
 		}
 		this.powerupText.text = this.currPowerup;
 	}
@@ -156,12 +156,19 @@ function usePU(powerup){
 			var bomb = new Bomb(game, player.x, player.y);
 			//bomb.body.static = true;
 			game.add.existing(bomb);
-			smartBombPlacement.play();
+			smartBombPlacement.play("", 0, 0.3);
 			player.currPowerup = "None";
 			break;
 		case "Patch":
-			powerupHeal.play();
-			homebase.health = homebase.health + 30 > 100 ? 100 : homebase.health + 30;
+			powerupHeal.play("", 0, 0.3);
+			homebase.health = homebase.health + 20 > 100 ? 100 : homebase.health + 20;
+			var heart = game.add.sprite(homebase.x, homebase.y, 'heart');
+			heart.anchor.set(0.5);
+			game.add.existing(heart);
+			heart.animations.add('beat', [0, 1, 2], 5, true);
+			heart.animations.play('beat');
+			homeInvulnerable = true;
+			game.time.events.add(5000, patcher, this, heart);
 			//homebase.healthText.text = 'Health: ' + homebase.health;
 			player.currPowerup = "None";
 			break;
@@ -175,31 +182,37 @@ function teleport(){
 	player.body.x = game.input.activePointer.position.x;
 	player.body.y = game.input.activePointer.position.y;
 	game.add.tween(player.scale).to( { x: 0.5, y: 0.5 }, 80, Phaser.Easing.Linear.None, true, 0, 0, false);
+	var explode = new MiniExplosion(game, game.input.activePointer.position.x, game.input.activePointer.position.y, 'Explosion');
+	game.add.existing(explode);
+}
+
+function patcher(heart){
+	heart.kill();
+	heart.destroy();
+	homeInvulnerable = false;
 }
 
 function playerHit(body, bodyB, shapeA, shapeB, equation){
-	if (body != null){
-		if(body.whatAmI == 'enemy'){
-			var rSound = Math.floor(Math.random() * 5);
-			switch(rSound){
-				case 0:
-					playerHitEnemy.play();
-					break;
-				case 1:
-					playerHitEnemy2.play();
-					break;
-				case 2:
-					playerHitEnemy3.play();
-					break;
-				case 3:
-					playerHitEnemy4.play();
-					break;
-				case 4:
-					playerHitEnemy5.play();
-					break;
-				default:
-					break;
-			}
+	if(body && body.whatAmI == 'enemy'){
+		var rSound = Math.floor(Math.random() * 5);
+		switch(rSound){
+			case 0:
+				playerHitEnemy.play("", 0, 0.5);
+				break;
+			case 1:
+				playerHitEnemy2.play("", 0, 0.5);
+				break;
+			case 2:
+				playerHitEnemy3.play("", 0, 0.5);
+				break;
+			case 3:
+				playerHitEnemy4.play("", 0, 0.5);
+				break;
+			case 4:
+				playerHitEnemy5.play("", 0, 0.5);
+				break;
+			default:
+				break;
 		}
 	}
 }
