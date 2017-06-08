@@ -3,7 +3,7 @@ function Explosion(game, x, y) {
 
 	this.scale.set(3);
 	game.physics.p2.enable(this, false);
-	this.whatAmI = "Explosion";
+	this.body.whatAmI = "Explosion";
 	this.anchor.set(0.5);
 	this.body.static = true;
 

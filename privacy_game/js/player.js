@@ -89,7 +89,12 @@ Player.prototype.fire = function(){
 
         console.log('fired');
         var bullet = new Bullet(game, this.x - xpos, this.y - ypos, 'bullet');
-		accelerateToPoint(bullet, 30000);
+		//accelerateToPoint(bullet, 30000);
+		
+		bullet.body.rotation = angleRadians + game.math.degToRad(90);
+		bullet.body.force.x = Math.cos(angleRadians) * -30000;    // accelerateToObject 
+		bullet.body.force.y = Math.sin(angleRadians) * -30000;
+		
         bullets.add(bullet);
 		this.numBullets++;
 	}
@@ -167,9 +172,13 @@ function usePU(powerup){
 			game.add.existing(heart);
 			heart.animations.add('beat', [0, 1, 2], 5, true);
 			heart.animations.play('beat');
+			
+			if (homeInvulnerable){
+				keepInvulnerable = true;
+			}
 			homeInvulnerable = true;
 			game.time.events.add(5000, patcher, this, heart);
-			//homebase.healthText.text = 'Health: ' + homebase.health;
+
 			player.currPowerup = "None";
 			break;
 		default:
@@ -187,9 +196,14 @@ function teleport(){
 }
 
 function patcher(heart){
-	heart.kill();
-	heart.destroy();
-	homeInvulnerable = false;
+	if (!keepInvulnerable){
+		heart.kill();
+		heart.destroy();
+		homeInvulnerable = false;
+	}
+	else{
+		keepInvulnerable = false;
+	}
 }
 
 function playerHit(body, bodyB, shapeA, shapeB, equation){

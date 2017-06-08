@@ -508,6 +508,7 @@ var emitter;
 var highscore = 0;
 var difficulty = 0;
 var homeInvulnerable = false;
+var keepInvulnerable  = false;
 
 var bulletMaterial;
 var enemyMaterial;
