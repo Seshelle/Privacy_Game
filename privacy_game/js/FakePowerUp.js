@@ -28,12 +28,15 @@ FakePowerup.prototype.update = function() {
 	var dx = this.x - this.homeBase.x;
 	var dy = this.y - this.homeBase.y;
     var distance = Math.sqrt(dx * dx + dy * dy);
-	
+
 	if (distance < 40){
 		if (!homeInvulnerable){
 			this.homeBase.health -= this.damage;
 			this.homeBase.frame = 12;
 			game.time.events.add(1000, function(){this.homeBase.frame = this.homeBase.health / 10;}, this);
+			this.homeBase.animations.play('damaged');
+			game.add.tween(this.homeBase).to( { frame: (this.homeBase.health / 10) }, 1000, Phaser.Easing.Linear.None, true, 0, 0, false);
+			game.physics.p2.removeSpring(this.spring);
 			aboutToLose.play("", 0, 0.5);
 			game.camera.shake(0.005, 900);
 			this.kill();
