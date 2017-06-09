@@ -17,9 +17,7 @@ Explosion.prototype = Object.create(Phaser.Sprite.prototype);
 Explosion.prototype.constructor = Explosion;
 
 Explosion.prototype.update = function () {
-	//if (this.animations.currentAnim.frame >= 4){
 		this.body.onBeginContact.add(explode, this);
-	//}
 	console.log(this.animations.currentAnim.frame);
 	if(this.animations.currentAnim.frame == 8){
 		console.log("destroy explosion");

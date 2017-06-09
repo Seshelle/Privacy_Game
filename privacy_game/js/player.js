@@ -38,7 +38,6 @@ Player.prototype.update = function() {
 	if(this.numBullets < 0){
 		this.numBullets = 0;
 	}
-	//this.body.onBeginContact.add(collect, this);
 	
 	this.body.angularForce = 0;
 	this.body.angularVelocity = 0;
