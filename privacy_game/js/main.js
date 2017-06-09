@@ -430,7 +430,7 @@ function spawnEnemies(){
 	console.log("spawn enemies");
 	
 	//spawns random amount of enemies depending on difficulty at random location
-	var numEnemies = Math.random() * (difficulty/7) + 3;
+	var numEnemies = Math.random() * (difficulty/7) + 4;
 	difficulty++;
 	
 	for(let x = 0; x < numEnemies; x++){
